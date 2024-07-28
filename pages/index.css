@@ -1,6 +1,6 @@
 .page {
   margin: 0;
-  font-family: Inter, sans-serif;
+  font-family: "Inter", sans-serif;
   background-color: black;
   color: white;
 }
@@ -79,4 +79,52 @@
   object-fit: cover;
   background-position: center;
   margin-right: 24px;
+}
+
+.cards {
+  margin-top: 30px;
+  border-radius: 10px;
+}
+
+.cards__list {
+  display: grid;
+  justify-content: center;
+  grid-template-columns: repeat(auto-fit, 282px);
+  grid-gap: 20px 17px;
+  padding: 0;
+  margin: 0;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  border-radius: 10px;
+  list-style: none;
+  border-radius: 10px;
+}
+
+.card__image {
+  height: 282px;
+  width: 282px;
+  border-radius: 10px 10px 0px 0px;
+}
+
+.card__description {
+  display: flex;
+  background-color: white;
+  color: black;
+  padding-top: 25px;
+  padding-bottom: 25px;
+  padding-left: 20px;
+  padding-right: 20px;
+  align-items: center;
+  justify-content: space-between;
+  border-radius: 0px 0px 10px 10px;
+}
+
+.card__like-button {
+  background: transparent url(../images/Group.png) center;
+  height: 18px;
+  width: 21px;
+  border: none;
 }
