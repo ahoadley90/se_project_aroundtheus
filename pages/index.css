@@ -58,6 +58,7 @@
 }
 
 .profile__title {
+  font-family: "Inter";
   font-size: 42px;
   line-height: 48px;
   font-weight: 500;
@@ -66,6 +67,7 @@
 }
 
 .profile__description {
+  font-family: "Inter";
   font-size: 18px;
   line-height: 22px;
   font-weight: 400;
@@ -127,4 +129,31 @@
   height: 18px;
   width: 21px;
   border: none;
+}
+
+.h2 {
+  width: 100px;
+  height: 29px;
+  margin-left: 220px;
+  font-family: "Inter";
+  font-weight: 900;
+  font-size: 24px;
+  line-height: 29px;
+}
+
+.footer {
+  display: flex;
+  max-width: 318px;
+  height: 18px;
+  margin-top: 40px;
+  margin-bottom: 40px;
+  margin-left: 20px;
+}
+
+.footer__description {
+  font-family: "Inter";
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 22px;
+  color: #545454;
 }
