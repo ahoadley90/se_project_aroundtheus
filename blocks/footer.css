@@ -1,10 +1,10 @@
 .footer {
   display: flex;
+  align-self: flex-start;
   max-width: 318px;
   height: 18px;
   margin-top: 40px;
   margin-bottom: 40px;
-  margin-left: 200px;
 }
 
 .footer__description {
@@ -13,4 +13,11 @@
   font-size: 18px;
   line-height: 22px;
   color: #545454;
+}
+
+@media screen and (max-width: 480px) {
+  .footer {
+    padding-left: 19px;
+    max-width: 282px;
+  }
 }

@@ -13,12 +13,13 @@
 }
 
 .profile__edit-button {
-  background: transparent url(../images/Edit\ Button.png) center no-repeat;
+  background: transparent url(../images/Edit\ Button.svg) center no-repeat;
   height: 24px;
   width: 24px;
   grid-area: button;
   border-color: white;
   border-style: solid;
+  cursor: pointer;
 }
 
 .profile__edit-button:hover {
@@ -27,7 +28,7 @@
 }
 
 .profile__add-button {
-  background: transparent url(..//images/Add\ Button-min.png) center no-repeat;
+  background: transparent url(../images/Add\ Button.svg) center no-repeat;
   width: 150px;
   height: 50px;
   margin-left: auto;
@@ -65,4 +66,41 @@
   object-fit: cover;
   background-position: center;
   margin-right: 24px;
+}
+
+@media screen and (max-width: 480px) {
+  .profile {
+    flex-direction: column;
+  }
+
+  .profile__info {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    justify-content: center;
+    padding-left: 62px;
+    padding-right: 62px;
+    max-width: 320px;
+    max-height: 286px;
+  }
+
+  .profile__title {
+    mac-width: 282px;
+    max-height: 50px;
+    margin: 0;
+    padding: 0;
+    font-size: 24px;
+    text-align: center;
+  }
+
+  .profile__description {
+    width: 100%;
+    text-align: center;
+  }
+
+  .profile__add-button {
+    display: block;
+    margin: 20px 0;
+    width: 100%;
+  }
 }

@@ -1,10 +1,18 @@
 .header {
   margin-top: 45px;
+  border-bottom: 1px solid rgb(84 84 84 / 0.7);
+  pading-bottom: 20px;
 }
 
-.header__container {
+.header.page__section {
   display: flex;
   justify-content: flex-start;
   padding-bottom: 20px;
-  border-bottom: 1px solid #545454;
+}
+
+@media screen and (max-width: 480px) {
+  .header {
+    padding-left: 40px;
+    padding-bottom: 20px;
+  }
 }
