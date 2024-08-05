@@ -28,7 +28,7 @@
 }
 
 .profile__add-button {
-  background: transparent url(../images/Add\ Button.svg) center no-repeat;
+  background: url(../images/add_button.svg) center no-repeat;
   width: 150px;
   height: 50px;
   margin-left: auto;
@@ -85,12 +85,14 @@
   }
 
   .profile__title {
-    mac-width: 282px;
+    max-width: 282px;
     max-height: 50px;
     margin: 0;
     padding: 0;
-    font-size: 24px;
+    font-size: 22px;
+    line-height: 27px;
     text-align: center;
+    gap: 36px;
   }
 
   .profile__description {
@@ -101,6 +103,10 @@
   .profile__add-button {
     display: block;
     margin: 20px 0;
-    width: 100%;
+    width: 282px;
+  }
+
+  .profile__image {
+    margin-bottom: 20px;
   }
 }
