@@ -10,3 +10,20 @@
   padding: 0;
   margin: 0;
 }
+
+@media screen and (max-width: 320px) {
+  .cards__list {
+    display: flex;
+    flex-direction: column;
+    max-width: 282px;
+    align-items: center;
+    padding: 0;
+    margin: 0;
+  }
+
+  .cards {
+    max-width: 282px;
+    margin: 0;
+    padding: 0;
+  }
+}

@@ -70,15 +70,23 @@
   margin-right: 24px;
 }
 
-@media screen and (max-width: 480px) {
+@media screen and (max-width: 320px) {
   .profile {
+    display: flex;
     flex-direction: column;
+    max-width: 282px;
+    max-height: 286px;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+    padding: 0;
   }
 
   .profile__info {
     display: flex;
+    align-items: center;
     flex-wrap: wrap;
-    width: 100%;
+    max-width: 282px;
     justify-content: center;
   }
 
@@ -99,7 +107,7 @@
   }
 
   .profile__description {
-    width: 100%;
+    max-width: 282px;
     text-align: center;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -116,6 +124,7 @@
     display: block;
     margin: 20px 0;
     width: 282px;
+    height: 50px;
     cursor: pointer;
     gap: 36px;
   }
@@ -128,5 +137,6 @@
     height: 18px;
     width: 18px;
     margin-left: 14px;
+    align-self: center;
   }
 }
