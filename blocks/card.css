@@ -43,7 +43,6 @@
 
 .card__title {
   max-width: 219px;
-  height: 29px;
   font-family: "Inter", Arial, "sans-serif";
   font-weight: 900;
   font-size: 24px;
@@ -51,7 +50,7 @@
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
-  margin: auto;
+  margin: 0;
 }
 
 @media screen and (max-width: 320px) {

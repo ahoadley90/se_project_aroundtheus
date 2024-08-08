@@ -51,6 +51,10 @@
   font-weight: 500;
   grid-area: title;
   margin: 0;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  max-width: 415px;
 }
 
 .profile__description {
@@ -59,6 +63,10 @@
   line-height: 22px;
   font-weight: 400;
   grid-area: description;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  max-width: 415px;
 }
 
 .profile__image {
@@ -78,8 +86,9 @@
     max-height: 286px;
     justify-content: center;
     align-items: center;
-    margin: 0 auto;
+
     padding: 0;
+    margin-bottom: 36px;
   }
 
   .profile__info {
@@ -92,30 +101,20 @@
 
   .profile__title {
     max-width: 282px;
-    height: 50px;
-    margin: 0;
     padding: 0;
-    font-weight: 500;
     font-size: 22px;
     line-height: 27px;
     text-align: center;
-    gap: 36px;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    overflow: hidden;
+    margin-bottom: 14px;
     max-width: 196px;
   }
 
   .profile__description {
     max-width: 282px;
     text-align: center;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    overflow: hidden;
     max-width: 282px;
     margin: 0;
     padding: auto;
-    font-weight: 400;
     font-size: 14px;
     line-height: 17px;
   }
@@ -130,13 +129,19 @@
   }
 
   .profile__image {
-    margin-bottom: 20px;
+    margin-bottom: 30px;
+    margin-right: 0;
+    display: flex;
+    padding: 0;
   }
 
   .profile__edit-button {
     height: 18px;
     width: 18px;
-    margin-left: 14px;
+    margin-left: 10px;
     align-self: center;
+    padding: 0;
+    border-radius: 1px;
+    margin-bottom: 15px;
   }
 }

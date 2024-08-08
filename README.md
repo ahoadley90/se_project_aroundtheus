@@ -26,4 +26,4 @@ This is a video I made going over the project, my implementation of grid, flexbo
 
 - [link to screen record (https://www.loom.com/share/e224d6f8ccfa43859574237a85e62a1b?sid=e5d113df-787d-4585-b0c5-ad5884fc4ce1)]
 
-- This is the link to the project in GitHub (https://github.com/ahoadley90/se_project_aroundtheus_amanda)
+- This is the link to the project in GitHub (https://ahoadley90.github.io/se_project_aroundtheus/)
