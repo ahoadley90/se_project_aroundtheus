@@ -18,10 +18,8 @@
 @media screen and (max-width: 480px) {
   .page__content {
     max-width: 320px;
-    max-height: 2812px;
-    margin: auto;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+    margin: 0 auto;
+    box-sizing: border-box;
+    padding: 0 10px;
   }
 }

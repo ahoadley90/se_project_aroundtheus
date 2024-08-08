@@ -2,22 +2,29 @@
   display: flex;
   align-self: flex-start;
   max-width: 318px;
-  height: 18px;
   margin-top: 40px;
   margin-bottom: 40px;
 }
 
 .footer__description {
-  font-family: "Inter";
+  font-family: "Inter", "Arial", "sans-serif";
   font-weight: 400;
   font-size: 18px;
   line-height: 22px;
   color: #545454;
+  margin: 0;
+  padding: 0;
 }
 
 @media screen and (max-width: 480px) {
   .footer {
-    padding-left: 19px;
+    margin-left: 19px;
     max-width: 282px;
+  }
+
+  .footer__description {
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 22px;
   }
 }

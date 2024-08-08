@@ -43,7 +43,7 @@
 
 .card__title {
   max-width: 219px;
-  max-height: 29px;
+  height: 29px;
   font-family: "Inter", Arial, "sans-serif";
   font-weight: 900;
   font-size: 24px;
