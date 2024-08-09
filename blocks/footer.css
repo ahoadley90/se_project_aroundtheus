@@ -16,13 +16,10 @@
 }
 
 @media screen and (max-width: 320px) {
-  .footer {
-    max-width: 282px;
-    height: 14px;
-  }
-
   .footer__description {
+    height: 14px;
     font-size: 14px;
-    line-height: 22px;
+    line-height: 17px;
+    margin-left: 19px;
   }
 }
