@@ -100,7 +100,8 @@
   }
 
   .profile__title {
-    max-width: 282px;
+    max-width: 222px;
+    min-width: 202px;
     padding: 0;
     font-size: 22px;
     line-height: 27px;
