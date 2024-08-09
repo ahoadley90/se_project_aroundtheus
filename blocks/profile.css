@@ -37,6 +37,7 @@
   border-color: white;
   border-style: solid;
   color: white;
+  cursor: pointer;
 }
 
 .profile__add-button:hover {
@@ -80,10 +81,9 @@
 
 @media screen and (max-width: 320px) {
   .profile {
-    display: flex;
     flex-direction: column;
     max-width: 282px;
-    max-height: 286px;
+    min-height: 286px;
     justify-content: center;
     align-items: center;
 

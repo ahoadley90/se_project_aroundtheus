@@ -56,20 +56,8 @@
 @media screen and (max-width: 320px) {
   .card {
     max-width: 282px;
-    max-height: 361px;
+    min-height: 361px;
     margin: 10px 0;
-    padding: 0;
-  }
-
-  .card__image {
-    height: 282px;
-    width: 282px;
-    object-fit: cover;
-  }
-
-  .cards.page__section {
-    max-width: 282px;
-    margin: 0;
     padding: 0;
   }
 }
