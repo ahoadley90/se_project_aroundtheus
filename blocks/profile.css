@@ -22,6 +22,7 @@
   border-style: solid;
   cursor: pointer;
   align-self: center;
+  border-width: 1px;
 }
 
 .profile__edit-button:hover {

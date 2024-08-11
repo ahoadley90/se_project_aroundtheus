@@ -2,7 +2,6 @@
   display: flex;
   align-self: flex-start;
   max-width: 318px;
-  margin-bottom: 36px;
 }
 
 .footer__description {
@@ -13,6 +12,7 @@
   color: #545454;
   margin-bottom: 60px;
   padding: 0;
+  margin-top: 0;
 }
 
 @media screen and (max-width: 320px) {
@@ -21,7 +21,7 @@
     line-height: 17px;
     margin-left: 19px;
     margin-top: 0px;
-    margin-bottom: 10px;
+    margin-bottom: 36px;
     max-width: 282px;
   }
 }

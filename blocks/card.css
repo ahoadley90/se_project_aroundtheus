@@ -1,7 +1,6 @@
 .card {
   display: flex;
   flex-direction: column;
-  border-radius: 10px;
   list-style: none;
   border-radius: 10px;
   text-overflow: ellipsis;
@@ -58,3 +57,4 @@
     min-height: 361px;
     padding: 0;
   }
+}
