@@ -7,7 +7,6 @@
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
-  border-radius: 10px 10px 10px 10px;
 }
 
 .card__image {
@@ -58,5 +57,9 @@
     max-width: 282px;
     min-height: 361px;
     padding: 0;
+  }
+
+  .card:last-child {
+    margin-bottom: 48px;
   }
 }

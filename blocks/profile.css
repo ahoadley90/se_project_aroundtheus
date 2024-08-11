@@ -68,6 +68,8 @@
   white-space: nowrap;
   overflow: hidden;
   max-width: 415px;
+  margin-top: 7px;
+  margin-bottom: 0px;
 }
 
 .profile__image {
@@ -107,7 +109,6 @@
     line-height: 27px;
     text-align: center;
     margin-bottom: 14px;
-    max-width: 196px;
   }
 
   .profile__description {
