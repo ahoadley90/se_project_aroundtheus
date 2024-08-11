@@ -58,8 +58,3 @@
     min-height: 361px;
     padding: 0;
   }
-
-  .card:last-child {
-    margin-bottom: 20px;
-  }
-}
