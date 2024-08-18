@@ -24,22 +24,20 @@
   color: #000;
   width: 430px;
   height: 330px;
-  border: 1px;
+  border: 1px solid #000;
 }
 
 .modal__heading {
   width: 330px;
-  height: 23px;"
-  font-family: "Inter", "Arial", "sans-serif"; 
+  height: 23px;
+  font-family: "Inter", "Arial", "sans-serif";
   font-weight: 900;
   font-size: 24px;
-  line-height: 30px; 
-  
-
+  line-height: 30px;
 }
 
 .modal__close {
-  background-image: url(../images/Close\ Icon.svg);
+  background-image: url(../images/Close Icon.svg);
   position: absolute;
   bottom: calc(100% + 5px);
   left: calc(100% + 5px);
@@ -47,7 +45,6 @@
   background-color: transparent;
   width: 40px;
   height: 40px;
-  background-color: transparent;
   background-repeat: no-repeat;
   background-size: contain;
   cursor: pointer;
@@ -55,83 +52,73 @@
 
 .modal__input_title {
   display: flex;
-  justify-content: center;   
+  justify-content: center;
   width: 358px;
-  height: 28px; 
-  border: 1px; 
-  border-color: #000;
+  height: 28px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
   margin-bottom: 30px;
   margin-top: 54px;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
 }
 
 .modal__input_description {
-    display: flex;
-    justify-content:center;
-    width: 358px;
-    height: 28px;
-    border: 1px;
-    border-color: #000;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
-    margin-bottom: 48px;
+  display: flex;
+  justify-content: center;
+  width: 358px;
+  height: 28px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+  margin-bottom: 48px;
 }
 
 .modal__button_save {
-    width: 358px;
-    height: 50px; 
-    radius: 2px;
-    background-color: #000;
-    color: #fff;
-    font-family: "Inter", "Arial", "sans-serif";
-    font-weight: 400;
-    font-size: 18px;
-    line-height: 22px; 
-
+  width: 358px;
+  height: 50px;
+  border-radius: 2px;
+  background-color: #000;
+  color: #fff;
+  font-family: "Inter", "Arial", "sans-serif";
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 22px;
 }
 
 @media screen and (max-width: 320px) {
+  .modal {
+    width: 282px;
+    max-height: 322px;
+    top: 123px;
+    bottom: 123px;
+    left: 19px;
+    right: 19px;
+    padding: 0;
+    margin: 0;
+  }
 
-    .modal {
-        width: 282px;
-        max-height: 322px; 
-        top: 123px;
-        bottom: 123px;
-        left: 19px;
-        right: 19px;
-        padding: 0;
-        margin: 0;
+  .modal__close {
+    width: 26px;
+    height: 26px;
+  }
 
-    }
+  .modal__heading {
+    width: 238px;
+    height: 22px;
+    font-size: 18px;
+    line-height: 22px;
+  }
 
-    .modal__close {
-        width: 26px;
-        height: 26px;
+  .modal__input_title {
+    width: 238px;
+    height: 27px;
+  }
 
-    }
+  .modal__input_description {
+    width: 238px;
+    height: 27px;
+  }
 
-    .modal__heading {
-        width: 238px;
-        height: 22px;
-        font-size: 18px;
-        line-height: 22px;
-    }
-
-    .modal__input_title {
-        width: 238px;
-        height: 27px;
-
-    }
-
-    .modal__input_description {
-        width: 238px;
-        height: 27px;
-    }
-
-    .modal__button_save {
-        width: 238px;
-        height: 46px;
-        font-size: 14px;
-        line-height: 17px; 
-    }
-
+  .modal__button_save {
+    width: 238px;
+    height: 46px;
+    font-size: 14px;
+    line-height: 17px;
+  }
 }
