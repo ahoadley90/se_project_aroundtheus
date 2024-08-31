@@ -27,10 +27,26 @@ const initialCards = [
 
 const profileEditButton = document.querySelector("#profile__edit-button");
 const profileEditModal = document.querySelector("#profile__edit-modal");
+const modalCloseButton = document.querySelector(".modal__close");
 profileEditButton.addEventListener("click", () => {
-  if (profileEditModal.classList.contains("modal_opened")) {
+  if (profileEditModal.classList.contains("modal__opened")) {
     profileEditModal.classList.remove("modal_opened");
   } else {
     profileEditModal.classList.add("modal_opened");
+  }
+});
+
+profileEditButton.addEventListener("click", () => {
+  profileEditModal.style.display = "flex";
+  console.log("Modal opened");
+});
+modalCloseButton.addEventListener("click", () => {
+  profileEditModal.style.display = "none";
+});
+
+window.addEventListener("click", (event) => {
+  if (event.target === profileEditModal) {
+    profileEditModal.style.display = "none";
+    console.log("Modal closed by clicking outside");
   }
 });

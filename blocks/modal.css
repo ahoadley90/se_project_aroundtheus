@@ -50,6 +50,16 @@
   cursor: pointer;
 }
 
+.modal__input {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 20px;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+  font-size: 16px;
+}
+
 .modal__input_title {
   display: flex;
   justify-content: center;
@@ -70,6 +80,7 @@
 }
 
 .modal__button_save {
+  display: block;
   width: 358px;
   height: 50px;
   border-radius: 2px;
@@ -79,6 +90,11 @@
   font-weight: 400;
   font-size: 18px;
   line-height: 22px;
+}
+
+.modal__button_save:hover {
+  background-color: #000;
+  opacity: 80%;
 }
 
 @media screen and (max-width: 320px) {
