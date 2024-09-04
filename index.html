@@ -70,17 +70,26 @@
     <h3 class="footer__description">&#169; 2024 Around The U.S.</h3>
 </footer>
 </div> 
-<div class="modal" id="profile__edit-modal">
+<div class="modal" id="profile__edit_modal">
     <div class="modal__container">
         <button class="modal__close"></button>
         <p class="modal__heading">Edit profile</p>
         <form class="modal__form">
-         <input class=" modal__input modal__input_title" type="text" name="title" placeholder="Name"> 
-         <input class= " modal__input modal__input_description" type="text" name="description" placeholder="">
+         <input id="profile__title_input" class=" modal__input modal__input_title" type="text" name="title" placeholder="Name"> 
+         <input id="profile__description_input" class= " modal__input modal__input_description" type="text" name="description" placeholder="">
          <button class="modal__button modal__button_save" type="submit">Save</button>
         </form>
     </div>
 </div>
+
+<template id="card__template">
+    <li class="card">
+        <img src="./images/yosemite-min.jpg" class="card__image" alt="image of yosemite"/>
+        <div class="card__description"><h2 class="card__title">Yosemite Valley</h2>
+            <button class="card__like-button" type="button"></button>
+        </div>
+    </li>
+</template>
 <script src="./scripts/index.js"></script>
 </body>
 </html>
