@@ -74,13 +74,6 @@ function getCardElement(cardData) {
   return cardElement;
 }
 
-window.addEventListener("click", (event) => {
-  if (event.target === profileEditModal) {
-    profileEditModal.style.display = "none";
-    console.log("Modal closed by clicking outside");
-  }
-});
-
 profileEditButton.addEventListener("click", () => {
   profileTitleInput.value = profileTitle.textContent;
   profileDescriptionInput.value = profileDescription.textContent;
@@ -95,6 +88,8 @@ profileEditForm.addEventListener("submit", (e) => {
   e.preventDefault();
   profileTitle.textContent = profileTitleInput.value;
   profileDescription.textContent = profileDescriptionInput.value;
+  profileEditModal.classList.remove("modal__opened");
+  profileEditModal.style.display = "none";
 });
 
 initialCards.forEach((cardData) => {
