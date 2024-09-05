@@ -60,7 +60,7 @@
   font-size: 16px;
 }
 
-.modal__input_title {
+.modal_input:first-of-type {
   display: flex;
   justify-content: center;
   width: 358px;
@@ -70,7 +70,7 @@
   margin-top: 54px;
 }
 
-.modal__input_description {
+.modal_input:last-of-type {
   display: flex;
   justify-content: center;
   width: 358px;
