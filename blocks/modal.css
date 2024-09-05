@@ -50,7 +50,7 @@
   cursor: pointer;
 }
 
-.modal_input {
+.modal__input {
   display: block;
   width: 100%;
   padding: 10px;
@@ -60,7 +60,7 @@
   font-size: 16px;
 }
 
-.modal_input_name {
+.modal__input_name {
   display: flex;
   justify-content: center;
   width: 358px;
@@ -70,7 +70,7 @@
   margin-top: 54px;
 }
 
-.modal_input_description {
+.modal__input_description {
   display: flex;
   justify-content: center;
   width: 358px;
