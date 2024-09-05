@@ -6,13 +6,13 @@
   bottom: 0;
   right: 0;
   z-index: 999;
-  display: flex;
+  display: none;
   align-items: center;
   justify-content: center;
   padding: 0 19px;
 }
 
-.modal__opened {
+.modal_opened {
   display: flex;
 }
 

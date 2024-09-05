@@ -52,7 +52,7 @@ profileEditButton.addEventListener("click", () => {
 });
 
 function closePopup() {
-  profileEditModal.classList.remove("modal__opened");
+  profileEditModal.classList.remove("modal_opened");
 }
 
 function getCardElement(cardData) {
