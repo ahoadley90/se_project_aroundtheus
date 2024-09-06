@@ -18,6 +18,7 @@
 
 .modal__container {
   position: relative;
+  border: none;
   background-color: white;
   padding: 36px;
   border-radius: 10px;
@@ -34,6 +35,7 @@
   font-weight: 900;
   font-size: 24px;
   line-height: 30px;
+  margin-bottom: 54px;
 }
 
 .modal__close {
@@ -68,6 +70,10 @@
   border-bottom: 1px solid rgba(0, 0, 0, 0.2);
   margin-bottom: 30px;
   margin-top: 54px;
+  font-family: "Inter", "Arial", "sans-serif";
+  font-size: 14px;
+  line-height: 17px;
+  font-weight: 400;
 }
 
 .modal.modal__input_description {
@@ -75,8 +81,13 @@
   justify-content: center;
   width: 358px;
   height: 28px;
+  background-color: transparent;
   border-bottom: 1px solid rgba(0, 0, 0, 0.2);
   margin-bottom: 48px;
+  font-family: "Inter", "Arial", "sans-serif";
+  font-size: 14px;
+  line-height: 17px;
+  font-weight: 400;
 }
 
 .modal__button_save {
@@ -90,6 +101,8 @@
   font-weight: 400;
   font-size: 18px;
   line-height: 22px;
+  padding: 0;
+  margin: 0 auto;
 }
 
 .modal__button_save:hover {

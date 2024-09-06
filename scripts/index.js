@@ -42,9 +42,6 @@ profileEditButton.addEventListener("click", () => {
   nameInput.value = profileTitle.textContent;
   descriptionInput.value = profileDescription.textContent;
 });
-modalCloseButton.addEventListener("click", () => {
-  profileEditModal.style.display = "none";
-});
 
 profileEditButton.addEventListener("click", () => {
   profileEditModal.style.display = "flex";
