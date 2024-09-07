@@ -38,16 +38,6 @@ const cardTemplate =
   document.querySelector("#card__template").content.firstElementChild;
 const cardListEl = document.querySelector(".cards__list");
 
-profileEditButton.addEventListener("click", () => {
-  nameInput.value = profileTitle.textContent;
-  descriptionInput.value = profileDescription.textContent;
-});
-
-profileEditButton.addEventListener("click", () => {
-  profileEditModal.style.display = "flex";
-  console.log("Modal opened");
-});
-
 function closePopup() {
   profileEditModal.classList.remove("modal_opened");
 }
@@ -58,7 +48,6 @@ function getCardElement(cardData) {
   const cardTitleEl = cardElement.querySelector(".card__title");
   cardImageEl.src = cardData.link;
   cardImageEl.alt = cardData.name;
-  cardTitleEl.textContent = cardData.name;
   cardTitleEl.textContent = cardData.name;
   return cardElement;
 }
@@ -78,7 +67,6 @@ profileEditForm.addEventListener("submit", (e) => {
   profileTitle.textContent = nameInput.value;
   profileDescription.textContent = descriptionInput.value;
   closePopup();
-  profileEditModal.style.display = "none";
 });
 
 initialCards.forEach((cardData) => {

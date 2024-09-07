@@ -26,7 +26,8 @@
   width: 430px;
   height: 330px;
   border: 1px solid #000;
-  margin-top: -595px;
+  box-sizing: border-box;
+  margin-top: 0;
 }
 
 .modal__heading {
@@ -37,6 +38,7 @@
   font-size: 24px;
   line-height: 30px;
   margin-bottom: 54px;
+  margin-top: 0;
 }
 
 .modal__close {
@@ -63,7 +65,7 @@
   font-size: 16px;
 }
 
-.modal__input-name {
+.modal__input:first-of-type {
   display: flex;
   justify-content: center;
   width: 358px;
@@ -78,7 +80,7 @@
   font-weight: 400;
 }
 
-.modal__input-description {
+.modal__input:last-of-type {
   display: flex;
   justify-content: center;
   width: 358px;
@@ -86,7 +88,6 @@
   background-color: transparent;
   border: none;
   border-bottom: 1px solid rgba(0, 0, 0, 0.2);
-  margin-bottom: 48px;
   font-family: "Inter", "Arial", "sans-serif";
   font-size: 14px;
   line-height: 17px;
@@ -106,6 +107,7 @@
   line-height: 22px;
   padding: 0;
   justify-content: center;
+  margin-bottom: 34px;
 }
 
 .modal__button_save:hover {
@@ -130,15 +132,16 @@
     padding: 0;
     margin: 0;
     width: 282px;
-    max-height: 322px;
+    height: 322px;
   }
 
   .modal__close {
     width: 26px;
     height: 26px;
     padding: 0;
-    top: -50px;
+    top: -45px;
     left: 260px;
+    right: 19px;
   }
 
   .modal__heading {
@@ -150,7 +153,7 @@
     margin-top: 25px;
   }
 
-  .modal__input-name {
+  .modal__input:first-of-type {
     max-width: 238px;
     height: 27px;
     margin-left: 22px;
@@ -158,11 +161,12 @@
     padding: 0;
   }
 
-  .modal__input-description {
+  .modal__input:last-of-type {
     width: 238px;
     height: 27px;
     margin-right: 22px;
     margin-left: 22px;
+    padding: 0;
   }
 
   .modal__button_save {
@@ -171,5 +175,6 @@
     font-size: 14px;
     line-height: 17px;
     margin-left: 22px;
+    margin-top: 45px;
   }
 }
