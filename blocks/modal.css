@@ -114,6 +114,15 @@
   opacity: 80%;
 }
 
+.modal__title {
+  width: 330px;
+  height: 23px;
+  font-family: "Inter", "Arial", "sans-serif";
+  line-height: 29px;
+  font-size: 24px;
+  font-weight: 900;
+}
+
 @media screen and (max-width: 320px) {
   .modal {
     width: 282px;
