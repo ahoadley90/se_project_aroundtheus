@@ -43,6 +43,22 @@
   radius: 2px;
 }
 
+.card__delete-button {
+  background: url(../images/Trash-can.svg);
+  border: none;
+  cursor: pointer;
+  padding: 5px;
+  position: absolute;
+  margin-bottom: 590px;
+  margin-left: 230px;
+  height: 19px;
+  width: 18px;
+}
+
+.card__delete-button:hover {
+  opacity: 0.8;
+}
+
 .card__title {
   max-width: 219px;
   font-family: "Inter", Arial, "sans-serif";
