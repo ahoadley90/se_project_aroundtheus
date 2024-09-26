@@ -51,12 +51,32 @@ function closePopup() {
 
 function getCardElement(cardData) {
   const cardElement = cardTemplate.cloneNode(true);
+  console.log(cardElement);
   const cardImageEl = cardElement.querySelector(".card__image");
   const cardTitleEl = cardElement.querySelector(".card__title");
+  const likeButton = cardElement.querySelector(".card__like-button");
+  likeButton.addEventListener("click", () => {
+    likeButton.classList.toggle("card__like-button_active");
+  });
   cardImageEl.src = cardData.link;
   cardImageEl.alt = cardData.name;
   cardTitleEl.textContent = cardData.name;
   return cardElement;
+}
+
+function saveNewCard(e) {
+  e.preventDefault();
+  const cardTitle = cardTitleInput.value;
+  const cardImageUrl = cardUrlInput.value;
+  const newCardData = {
+    name: cardTitle,
+    link: cardImageUrl,
+  };
+  const newCardElement = getCardElement(newCardData);
+  cardListEl.append(newCardElement);
+  cardTitleInput.value = "";
+  cardUrlInput.value = "";
+  closePopup();
 }
 
 profileEditButton.addEventListener("click", () => {
