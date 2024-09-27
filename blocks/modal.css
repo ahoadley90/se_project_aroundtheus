@@ -29,6 +29,18 @@
   margin-top: 0;
 }
 
+.modal__content {
+  position: relative;
+}
+
+.modal__image {
+  width: 100%;
+  height: auto;
+  padding: 0;
+  max-width: 75vw;
+  max-height: 75vh;
+}
+
 .modal__heading {
   width: 330px;
   height: 23px;
@@ -52,6 +64,7 @@
   background-repeat: no-repeat;
   background-size: contain;
   cursor: pointer;
+  z-index: 10;
 }
 
 .modal__input {
