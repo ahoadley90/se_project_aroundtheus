@@ -6,14 +6,18 @@
   bottom: 0;
   right: 0;
   z-index: 999;
-  display: none;
   align-items: center;
   justify-content: center;
   padding: 0 19px;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.5s ease-in-out, visbility 0.5s ease-in-out;
 }
 
 .modal_opened {
   display: flex;
+  opacity: 1;
+  visibility: visible;
 }
 
 .modal__container {
@@ -27,6 +31,12 @@
   border: 1px solid #000;
   box-sizing: border-box;
   margin-top: 0;
+  transform: translateY(-50px);
+  transition: transform 0.3s ease;
+}
+
+.modal_opened .modal__container {
+  transform: translateY(0);
 }
 
 .modal__content {
