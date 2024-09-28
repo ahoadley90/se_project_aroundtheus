@@ -33,12 +33,12 @@
     <h3 class="footer__description">&#169; 2024 Around The U.S.</h3>
 </footer>
 </div> 
-<!----Edit Modal------------------>
+<!----Edit Modal------------------------------------------------------->
 <div class="modal" id="profile__edit_modal">
     <div class="modal__container">
         <button class="modal__close"></button>
         <p class="modal__heading">Edit profile</p>
-        <form class="modal__form">
+        <form class="modal__form" name="profile-form">
          <input id="profile_title_input" class="modal__input" type="text" name="title" placeholder="Name"> 
          <input id="profile_description_input" class= "modal__input" type="text" name="description" placeholder="Description">
          <button class="modal__button modal__button_save" type="submit">Save</button>
@@ -46,12 +46,12 @@
     </div>
 </div>
 
-<!------Add Card Modal-------->
+<!------Add Card Modal------------------------------------------>
 <div class="modal modal_is-opened" id="card__edit_modal">
     <div class="modal__container">
         <button class="modal__close"></button>
         <h3 class="modal__title">New Place</h3>
-        <form class="modal__form" id="add-card-form">
+        <form class="modal__form" id="add-card-form" name="card-form">
          <input id="card_edit_input" 
          class="modal__input modal__input_type_title"
           type="text" 
