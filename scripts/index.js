@@ -115,7 +115,7 @@ cardFormModal.addEventListener("submit", (e) => {
     link: cardUrlInput.value,
   };
   const cardElement = getCardElement(newCardData);
-  cardListEl.append(cardElement);
+  cardListEl.prepend(cardElement);
   closePopup(cardFormModal);
   e.target.reset();
 });
