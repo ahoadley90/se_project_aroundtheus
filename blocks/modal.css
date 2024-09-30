@@ -147,12 +147,12 @@
 }
 
 .modal__input.modal__input_type_title {
-  width: 340px;
+  width: 358px;
   height: 27px;
 }
 
 .modal__input.modal__input_type_url {
-  width: 340px;
+  width: 358px;
   height: 27px;
 }
 
@@ -167,7 +167,6 @@
 
   .modal__title {
     width: 238px;
-    height: 22px;
     font-size: 18px;
     line-height: 22px;
     margin-left: 22px;
@@ -179,13 +178,13 @@
     height: 26px;
     padding: 0;
     top: -45px;
-    left: 260px;
+    left: 245px;
     right: 19px;
     background-size: contain;
   }
 
   .modal__heading {
-    width: 238px;
+    max-width: 238px;
     height: 22px;
     font-size: 18px;
     line-height: 22px;
@@ -231,14 +230,18 @@
   }
 
   .modal__input.modal__input_type_title {
-    width: 234px;
+    max-width: 238px;
     height: 26px;
     padding-bottom: 5px;
   }
 
   .modal__input.modal__input_type_url {
-    width: 234px;
+    max-width: 238px;
     height: 26px;
     padding-bottom: 5px;
+  }
+
+  .modal__button.modal__button_save {
+    max-width: 238px;
   }
 }

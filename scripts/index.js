@@ -93,10 +93,6 @@ profileEditButton.addEventListener("click", () => {
   openPopup(profileEditModal);
 });
 
-profileEditCloseButton.addEventListener("click", () => {
-  closePopup(profileEditModal);
-});
-
 profileEditForm.addEventListener("submit", (e) => {
   e.preventDefault();
   profileTitle.textContent = nameInput.value;
@@ -114,7 +110,7 @@ cardFormModal.addEventListener("submit", (e) => {
     name: cardTitleInput.value,
     link: cardUrlInput.value,
   };
-  const cardElement = getCardElement(newCardData);
+  renderCard(newCardData, "prepend");
   cardListEl.prepend(cardElement);
   closePopup(cardFormModal);
   e.target.reset();
@@ -136,5 +132,5 @@ function renderCard(item, method = "prepend") {
   cardListEl[method](cardElement);
 }
 initialCards.forEach((cardData) => {
-  renderCard(cardData, "prepend");
+  renderCard(cardData);
 });
