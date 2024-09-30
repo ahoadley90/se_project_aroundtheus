@@ -168,7 +168,6 @@
     margin: 0;
     width: 282px;
     height: 322px;
-    margin-bottom: 900px;
   }
 
   .modal__title {
@@ -232,7 +231,6 @@
 
   .modal__content {
     position: relative;
-    margin-bottom: 900px;
   }
 
   .modal__input.modal__input_type_title {
