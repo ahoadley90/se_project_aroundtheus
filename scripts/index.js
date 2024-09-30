@@ -110,7 +110,7 @@ cardFormModal.addEventListener("submit", (e) => {
     name: cardTitleInput.value,
     link: cardUrlInput.value,
   };
-  cardListEl.prepend(getCardElement(newCardData));
+  renderCard(ewCardData, "prepend");
   closePopup(cardFormModal);
   e.target.reset();
 });
