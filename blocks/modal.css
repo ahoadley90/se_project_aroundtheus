@@ -144,16 +144,22 @@
   line-height: 29px;
   font-size: 24px;
   font-weight: 900;
+  margin-bottom: 54px;
 }
 
 .modal__input.modal__input_type_title {
-  width: 358px;
+  max-width: 358px;
+  width: 100%
   height: 27px;
+  box-sizing: border-box;
 }
 
 .modal__input.modal__input_type_url {
-  width: 358px;
+  max-width: 358px;
+  width: 100%;
   height: 27px;
+  margin-bottom: 48px;
+  box-sizing: border-box;
 }
 
 @media screen and (max-width: 320px) {
