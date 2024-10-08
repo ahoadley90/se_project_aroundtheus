@@ -126,6 +126,7 @@ popups.forEach((popup) => {
     closeButton.addEventListener("click", () => closePopup(popup));
   }
 });
+
 profileEditButton.addEventListener("click", () => {
   nameInput.value = profileTitle.textContent;
   descriptionInput.value = profileDescription.textContent;
