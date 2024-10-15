@@ -33,6 +33,7 @@
   margin-top: 0;
   transform: translateY(-50px);
   transition: transform 0.3s ease;
+  height: auto;
 }
 
 .modal_opened .modal__container {
@@ -173,6 +174,7 @@
   border-bottom-color: #ff0000;
   border-bottom-width: 1px;
   border-bottom-style: solid;
+  margin-bottom: 5px;
 }
 
 .modal__error {
