@@ -146,7 +146,12 @@ function handleCardFormSubmit(evt) {
   cardListEl.prepend(newCard);
 
   closePopup(cardFormModal);
+
   evt.target.reset();
+
+  const inputList = Array.from(evt.target.querySelectorAll(".modal__input"));
+  const buttonElement = evt.target.querySelector(".modal__button_save");
+  toggleButtonState(inputList, buttonElement, validationConfig);
 }
 
 profileEditButton.addEventListener("click", openProfileEditModal);
@@ -162,7 +167,6 @@ cardFormModal.addEventListener("submit", handleCardFormSubmit);
 addNewCardButton.addEventListener("click", openCardFormModal);
 
 function openCardFormModal() {
-  resetCardForm();
   openPopup(cardFormModal);
 }
 function resetCardForm() {
