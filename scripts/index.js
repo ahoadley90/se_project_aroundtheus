@@ -137,21 +137,34 @@ popups.forEach((popup) => {
 
 function handleCardFormSubmit(evt) {
   evt.preventDefault();
-  const nameInput = cardFormModal.querySelector(".modal__input_type_title");
-  const linkInput = cardFormModal.querySelector(".modal__input_type_url");
-  const name = nameInput.value;
-  const link = linkInput.value;
+  const cardTitleInput = cardFormModal.querySelector(
+    ".modal__input_type_title"
+  );
+  const cardUrlInput = cardFormModal.querySelector(".modal__input_type_url");
+  const cardTitle = cardTitleInput.value;
+  const cardUrl = cardUrlInput.value;
 
-  const newCard = getCardElement({ name, link });
-  cardListEl.prepend(newCard);
+  if (isValidUrl(cardUrl)) {
+    const cardData = {
+      name: cardTitle,
+      link: cardUrl,
+    };
+    renderCard(cardData);
+    closePopup(cardFormModal);
+    evt.target.reset();
 
-  closePopup(cardFormModal);
-
-  evt.target.reset();
-
-  const inputList = Array.from(evt.target.querySelectorAll(".modal__input"));
-  const buttonElement = evt.target.querySelector(".modal__button_save");
-  toggleButtonState(inputList, buttonElement, validationConfig);
+    // Reset form validation state
+    const inputList = Array.from(evt.target.querySelectorAll(".modal__input"));
+    const buttonElement = evt.target.querySelector(".modal__button_save");
+    toggleButtonState(inputList, buttonElement, validationConfig);
+  } else {
+    showInputError(
+      evt.target,
+      cardUrlInput,
+      "Please enter a valid URL",
+      validationConfig
+    );
+  }
 }
 
 profileEditButton.addEventListener("click", openProfileEditModal);

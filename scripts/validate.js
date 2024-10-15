@@ -69,9 +69,12 @@ function hasInvalidInput(inputList) {
 }
 
 function isValidUrl(url) {
-  const urlRegex =
-    /^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/;
-  return urlRegex.test(url);
+  try {
+    new URL(url);
+    return true;
+  } catch (e) {
+    return false;
+  }
 }
 
 function enableValidation(config) {
