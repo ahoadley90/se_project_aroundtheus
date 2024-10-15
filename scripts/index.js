@@ -1,3 +1,12 @@
+const validationConfig = {
+  formSelector: ".modal__form",
+  inputSelector: ".modal__input",
+  submitButtonSelector: ".modal__button_save",
+  inactiveButtonClass: "modal__button_inactive",
+  inputErrorClass: "modal__input_type_error",
+  errorClass: "modal__error_visible",
+};
+
 const initialCards = [
   {
     name: "Yosemite Valley",
@@ -74,24 +83,24 @@ function openPopup(popup) {
   popup.classList.add("modal_opened");
   document.addEventListener("keydown", closePopupByEscape);
   popup.addEventListener("mousedown", closePopupByOverlay);
+}
 
-  popup.classList.add("modal_opened");
+function openProfileEditModal() {
+  nameInput.value = profileTitle.textContent;
+  descriptionInput.value = profileDescription.textContent;
 
-  if (popup === profileEditModal) {
-    nameInput.value = profileTitle.textContent;
-    descriptionInput.value = profileDescription.textContent;
+  const inputList = Array.from(
+    profileEditForm.querySelectorAll(".modal__input")
+  );
+  const buttonElement = profileEditForm.querySelector(".modal__button");
 
-    const inputList = Array.from(
-      profileEditForm.querySelectorAll(".modal__input")
-    );
-    const buttonElement = profileEditForm.querySelector(".modal__button");
+  inputList.forEach((inputElement) => {
+    hideInputError(profileEditForm, inputElement, validationConfig);
+  });
 
-    inputList.forEach((inputElement) => {
-      hideInputError(profileEditForm, inputElement);
-    });
+  toggleButtonState(inputList, buttonElement, validationConfig);
 
-    toggleButtonState(inputList, buttonElement);
-  }
+  openPopup(profileEditModal);
 }
 
 function getCardElement(cardData) {
@@ -140,11 +149,7 @@ function handleCardFormSubmit(evt) {
   evt.target.reset();
 }
 
-profileEditButton.addEventListener("click", () => {
-  nameInput.value = profileTitle.textContent;
-  descriptionInput.value = profileDescription.textContent;
-  openPopup(profileEditModal);
-});
+profileEditButton.addEventListener("click", openProfileEditModal);
 
 profileEditForm.addEventListener("submit", (e) => {
   e.preventDefault();
@@ -196,12 +201,5 @@ initialCards.forEach((cardData) => {
 });
 
 document.addEventListener("DOMContentLoaded", () => {
-  enableValidation({
-    formSelector: ".modal__form",
-    inputSelector: ".modal__input",
-    submitButtonSelector: ".modal__button_save",
-    inactiveButtonClass: "modal__button_inactive",
-    inputErrorClass: "modal__input_type_error",
-    errorClass: "modal__error_visible",
-  });
+  enableValidation(validationConfig);
 });
