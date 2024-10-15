@@ -70,7 +70,6 @@ function closePopupByEscape(evt) {
     }
   }
 }
-
 function openPopup(popup) {
   popup.classList.add("modal_opened");
   document.addEventListener("keydown", closePopupByEscape);
@@ -127,6 +126,20 @@ popups.forEach((popup) => {
   }
 });
 
+function handleCardFormSubmit(evt) {
+  evt.preventDefault();
+  const nameInput = cardFormModal.querySelector(".modal__input_type_title");
+  const linkInput = cardFormModal.querySelector(".modal__input_type_url");
+  const name = nameInput.value;
+  const link = linkInput.value;
+
+  const newCard = getCardElement({ name, link });
+  cardListEl.prepend(newCard);
+
+  closePopup(cardFormModal);
+  evt.target.reset();
+}
+
 profileEditButton.addEventListener("click", () => {
   nameInput.value = profileTitle.textContent;
   descriptionInput.value = profileDescription.textContent;
@@ -140,49 +153,39 @@ profileEditForm.addEventListener("submit", (e) => {
   closePopup(profileEditModal);
 });
 
-addNewCardButton.addEventListener("click", () => {
+cardFormModal.addEventListener("submit", handleCardFormSubmit);
+addNewCardButton.addEventListener("click", openCardFormModal);
+
+function openCardFormModal() {
   resetCardForm();
   openPopup(cardFormModal);
-});
-
-cardFormModal.addEventListener("submit", (e) => {
-  e.preventDefault();
-  if (
-    !hasInvalidInput(
-      Array.from(cardFormModal.querySelectorAll(".modal__input"))
-    )
-  ) {
-    const newCardData = {
-      name: cardTitleInput.value,
-      link: cardUrlInput.value,
-    };
-    renderCard(newCardData);
-    closePopup(cardFormModal);
-    e.target.reset();
-  }
-});
-
+}
 function resetCardForm() {
   const form = cardFormModal.querySelector(".modal__form");
   form.reset();
   const inputList = Array.from(form.querySelectorAll(".modal__input"));
   const buttonElement = form.querySelector(".modal__button_save");
+  const config = {
+    inputErrorClass: "modal__input_type_error",
+    errorClass: "modal__error_visible",
+    inactiveButtonClass: "modal__button_inactive",
+  };
   inputList.forEach((inputElement) => {
-    hideInputError(form, inputElement);
+    hideInputError(form, inputElement, config);
   });
-  toggleButtonState(inputList, buttonElement);
+  toggleButtonState(inputList, buttonElement, config);
 }
 
 function openImageModal(imageSrc, imageAlt) {
+  const modalImage = imageModal.querySelector(".modal__image");
+  const modalCaption = imageModal.querySelector(".modal__caption");
+
   modalImage.src = imageSrc;
   modalImage.alt = imageAlt;
   modalCaption.textContent = imageAlt;
+
   openPopup(imageModal);
 }
-
-cardFormCloseButton.addEventListener("click", () => {
-  closePopup(cardFormModal);
-});
 
 function renderCard(item, method = "prepend") {
   const cardElement = getCardElement(item);
@@ -192,4 +195,13 @@ initialCards.forEach((cardData) => {
   renderCard(cardData);
 });
 
-enableValidation();
+document.addEventListener("DOMContentLoaded", () => {
+  enableValidation({
+    formSelector: ".modal__form",
+    inputSelector: ".modal__input",
+    submitButtonSelector: ".modal__button_save",
+    inactiveButtonClass: "modal__button_inactive",
+    inputErrorClass: "modal__input_type_error",
+    errorClass: "modal__error_visible",
+  });
+});
