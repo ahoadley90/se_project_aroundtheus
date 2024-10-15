@@ -200,8 +200,6 @@ function resetCardForm() {
 
 function openImageModal(imageSrc, imageAlt) {
   const modalImage = imageModal.querySelector(".modal__image");
-  const modalCaption = imageModal.querySelector(".modal__caption");
-
   modalImage.src = imageSrc;
   modalImage.alt = imageAlt;
   modalCaption.textContent = imageAlt;
