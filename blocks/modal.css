@@ -252,7 +252,8 @@
     font-size: 14px;
     line-height: 17px;
     margin-left: 22px;
-    margin-top: 45px;
+    height: 46px;
+    margin: auto;
   }
 
   .modal__image {

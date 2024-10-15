@@ -137,34 +137,20 @@ popups.forEach((popup) => {
 
 function handleCardFormSubmit(evt) {
   evt.preventDefault();
-  const cardTitleInput = cardFormModal.querySelector(
-    ".modal__input_type_title"
-  );
-  const cardUrlInput = cardFormModal.querySelector(".modal__input_type_url");
   const cardTitle = cardTitleInput.value;
   const cardUrl = cardUrlInput.value;
 
-  if (isValidUrl(cardUrl)) {
-    const cardData = {
-      name: cardTitle,
-      link: cardUrl,
-    };
-    renderCard(cardData);
-    closePopup(cardFormModal);
-    evt.target.reset();
+  const cardData = {
+    name: cardTitle,
+    link: cardUrl,
+  };
+  renderCard(cardData);
+  closePopup(cardFormModal);
+  evt.target.reset();
 
-    // Reset form validation state
-    const inputList = Array.from(evt.target.querySelectorAll(".modal__input"));
-    const buttonElement = evt.target.querySelector(".modal__button_save");
-    toggleButtonState(inputList, buttonElement, validationConfig);
-  } else {
-    showInputError(
-      evt.target,
-      cardUrlInput,
-      "Please enter a valid URL",
-      validationConfig
-    );
-  }
+  const inputList = Array.from(evt.target.querySelectorAll(".modal__input"));
+  const buttonElement = evt.target.querySelector(".modal__button_save");
+  toggleButtonState(inputList, buttonElement, validationConfig);
 }
 
 profileEditButton.addEventListener("click", openProfileEditModal);
@@ -182,24 +168,8 @@ addNewCardButton.addEventListener("click", openCardFormModal);
 function openCardFormModal() {
   openPopup(cardFormModal);
 }
-function resetCardForm() {
-  const form = cardFormModal.querySelector(".modal__form");
-  form.reset();
-  const inputList = Array.from(form.querySelectorAll(".modal__input"));
-  const buttonElement = form.querySelector(".modal__button_save");
-  const config = {
-    inputErrorClass: "modal__input_type_error",
-    errorClass: "modal__error_visible",
-    inactiveButtonClass: "modal__button_inactive",
-  };
-  inputList.forEach((inputElement) => {
-    hideInputError(form, inputElement, config);
-  });
-  toggleButtonState(inputList, buttonElement, config);
-}
 
 function openImageModal(imageSrc, imageAlt) {
-  const modalImage = imageModal.querySelector(".modal__image");
   modalImage.src = imageSrc;
   modalImage.alt = imageAlt;
   modalCaption.textContent = imageAlt;

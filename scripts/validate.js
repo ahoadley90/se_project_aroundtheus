@@ -15,14 +15,7 @@ function hideInputError(formElement, inputElement, config) {
 }
 
 function checkInputValidity(formElement, inputElement, config) {
-  if (inputElement.type === "url" && !isValidUrl(inputElement.value)) {
-    showInputError(
-      formElement,
-      inputElement,
-      "Please enter a valid URL",
-      config
-    );
-  } else if (!inputElement.validity.valid) {
+  if (!inputElement.validity.valid) {
     showInputError(
       formElement,
       inputElement,
@@ -33,7 +26,6 @@ function checkInputValidity(formElement, inputElement, config) {
     hideInputError(formElement, inputElement, config);
   }
 }
-
 function setEventListeners(formElement, config) {
   const inputList = Array.from(
     formElement.querySelectorAll(config.inputSelector)
