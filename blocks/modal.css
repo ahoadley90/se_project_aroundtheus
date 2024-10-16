@@ -282,4 +282,13 @@
   .modal__button.modal__button_save {
     max-width: 238px;
   }
+
+  .modal__error {
+    font-size: 12px;
+    max-width: 238px;
+    margin-left: 22px;
+    margin-righ: 22px;
+    box-sizing: border-box;
+    word-wrap: break-word;
+  }
 }
