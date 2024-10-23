@@ -1,4 +1,5 @@
 import Card from "../components/Card.js";
+import FormValidator from "../components/FormValidator.js";
 
 const validationConfig = {
   formSelector: ".modal__form",
@@ -91,16 +92,8 @@ function openProfileEditModal() {
   nameInput.value = profileTitle.textContent;
   descriptionInput.value = profileDescription.textContent;
 
-  const inputList = Array.from(
-    profileEditForm.querySelectorAll(".modal__input")
-  );
-  const buttonElement = profileEditForm.querySelector(".modal__button");
-
-  inputList.forEach((inputElement) => {
-    hideInputError(profileEditForm, inputElement, validationConfig);
-  });
-
-  toggleButtonState(inputList, buttonElement, validationConfig);
+  const formValidator = new FormValidator(validationConfig, profileEditForm);
+  formValidator.resetValidation();
 
   openPopup(profileEditModal);
 }
@@ -147,9 +140,8 @@ function handleCardFormSubmit(evt) {
   closePopup(cardFormModal);
   evt.target.reset();
 
-  const inputList = Array.from(evt.target.querySelectorAll(".modal__input"));
-  const buttonElement = evt.target.querySelector(".modal__button_save");
-  toggleButtonState(inputList, buttonElement, validationConfig);
+  const formValidator = new FormValidator(validationConfig, evt.target);
+  formValidator.resetValidation();
 }
 
 profileEditButton.addEventListener("click", openProfileEditModal);
@@ -179,5 +171,9 @@ function openImageModal(imageSrc, imageAlt) {
 renderInitialCards();
 
 document.addEventListener("DOMContentLoaded", () => {
-  enableValidation(validationConfig);
+  const forms = document.querySelectorAll(validationConfig.formSelector);
+  forms.forEach((formElement) => {
+    const formValidator = new FormValidator(validationConfig, formElement);
+    formValidator.enableValidation();
+  });
 });
