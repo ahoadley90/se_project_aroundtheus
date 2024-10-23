@@ -56,10 +56,6 @@ function toggleButtonState(inputList, buttonElement, config) {
   }
 }
 
-function hasInvalidInput(inputList) {
-  return inputList.some((inputElement) => !inputElement.validity.valid);
-}
-
 function isValidUrl(url) {
   try {
     new URL(url);

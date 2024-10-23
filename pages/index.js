@@ -1,3 +1,5 @@
+import Card from "../components/Card.js";
+
 const validationConfig = {
   formSelector: ".modal__form",
   inputSelector: ".modal__input",
@@ -103,27 +105,24 @@ function openProfileEditModal() {
   openPopup(profileEditModal);
 }
 
-function getCardElement(cardData) {
-  const cardElement = cardTemplate.cloneNode(true);
-  console.log(cardElement);
-  const cardImageEl = cardElement.querySelector(".card__image");
-  const cardTitleEl = cardElement.querySelector(".card__title");
-  const likeButton = cardElement.querySelector(".card__like-button");
-  const deleteButton = cardElement.querySelector(".card__delete-button");
+function handleImageClick(name, link) {
+  openImageModal(link, name);
+}
 
-  cardImageEl.src = cardData.link;
-  cardImageEl.alt = cardData.name;
-  cardTitleEl.textContent = cardData.name;
-  likeButton.addEventListener("click", () => {
-    likeButton.classList.toggle("card__like-button_active");
+function renderCard(cardData) {
+  const cardElement = createCard(cardData);
+  cardListEl.prepend(cardElement);
+}
+
+function renderInitialCards() {
+  initialCards.forEach((cardData) => {
+    renderCard(cardData);
   });
-  deleteButton.addEventListener("click", () => {
-    cardElement.remove();
-  });
-  cardImageEl.addEventListener("click", () => {
-    openImageModal(cardImageEl.src, cardImageEl.alt);
-  });
-  return cardElement;
+}
+
+function createCard(data) {
+  const card = new Card(data, "#card__template", openImageModal);
+  return card.generateCard();
 }
 
 const popups = document.querySelectorAll(".modal");
@@ -144,7 +143,7 @@ function handleCardFormSubmit(evt) {
     name: cardTitle,
     link: cardUrl,
   };
-  renderCard(cardData);
+  renderCard(cardData, cardListEl);
   closePopup(cardFormModal);
   evt.target.reset();
 
@@ -177,13 +176,7 @@ function openImageModal(imageSrc, imageAlt) {
   openPopup(imageModal);
 }
 
-function renderCard(item, method = "prepend") {
-  const cardElement = getCardElement(item);
-  cardListEl[method](cardElement);
-}
-initialCards.forEach((cardData) => {
-  renderCard(cardData);
-});
+renderInitialCards();
 
 document.addEventListener("DOMContentLoaded", () => {
   enableValidation(validationConfig);
