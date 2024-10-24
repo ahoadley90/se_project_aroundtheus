@@ -114,7 +114,7 @@ function renderInitialCards() {
 }
 
 function createCard(data) {
-  const card = new Card(data, "#card__template", openImageModal);
+  const card = new Card(data, "#card__template", handleImageClick);
   return card.generateCard();
 }
 
