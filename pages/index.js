@@ -95,6 +95,14 @@ function openProfileEditModal() {
   const formValidator = new FormValidator(validationConfig, profileEditForm);
   formValidator.resetValidation();
 
+  const submitButton = profileEditForm.querySelector(
+    validationConfig.submitButtonSelector
+  );
+  if (nameInput.validity.valid && descriptionInput.validity.valid) {
+    submitButton.classList.remove(validationConfig.inactiveButtonClass);
+    submitButton.disabled = false;
+  }
+
   openPopup(profileEditModal);
 }
 
@@ -142,6 +150,11 @@ function handleCardFormSubmit(evt) {
 
   const formValidator = new FormValidator(validationConfig, evt.target);
   formValidator.resetValidation();
+  const submitButton = evt.target.querySelector(
+    validationConfig.submitButtonSelector
+  );
+  submitButton.classList.add(validationConfig.inactiveButtonClass);
+  submitButton.disabled = true;
 }
 
 profileEditButton.addEventListener("click", openProfileEditModal);
@@ -151,6 +164,12 @@ profileEditForm.addEventListener("submit", (e) => {
   profileTitle.textContent = nameInput.value;
   profileDescription.textContent = descriptionInput.value;
   closePopup(profileEditModal);
+
+  const submitButton = e.target.querySelector(
+    validationConfig.submitButtonSelector
+  );
+  submitButton.classList.add(validationConfig.inactiveButtonClass);
+  submitButton.disabled = true;
 });
 
 cardFormModal.addEventListener("submit", handleCardFormSubmit);
