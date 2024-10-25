@@ -37,6 +37,14 @@ const initialCards = [
   },
 ];
 
+const editFormValidator = new FormValidator(
+  validationConfig,
+  document.forms["profile-form"]
+);
+const addCardFormValidator = new FormValidator(
+  validationConfig,
+  document.forms["card-form"]
+);
 const profileEditButton = document.querySelector("#profile__edit-button");
 const profileEditModal = document.querySelector("#profile__edit_modal");
 const profileEditCloseButton = profileEditModal.querySelector(".modal__close");
@@ -91,18 +99,7 @@ function openPopup(popup) {
 function openProfileEditModal() {
   nameInput.value = profileTitle.textContent;
   descriptionInput.value = profileDescription.textContent;
-
-  const formValidator = new FormValidator(validationConfig, profileEditForm);
-  formValidator.resetValidation();
-
-  const submitButton = profileEditForm.querySelector(
-    validationConfig.submitButtonSelector
-  );
-  if (nameInput.validity.valid && descriptionInput.validity.valid) {
-    submitButton.classList.remove(validationConfig.inactiveButtonClass);
-    submitButton.disabled = false;
-  }
-
+  formValidators["profile-form"].resetValidation();
   openPopup(profileEditModal);
 }
 
@@ -147,14 +144,8 @@ function handleCardFormSubmit(evt) {
   renderCard(cardData, cardListEl);
   closePopup(cardFormModal);
   evt.target.reset();
-
-  const formValidator = new FormValidator(validationConfig, evt.target);
-  formValidator.resetValidation();
-  const submitButton = evt.target.querySelector(
-    validationConfig.submitButtonSelector
-  );
-  submitButton.classList.add(validationConfig.inactiveButtonClass);
-  submitButton.disabled = true;
+  formValidators["card-form"].resetValidation();
+  formValidators["card-form"].disableButton();
 }
 
 profileEditButton.addEventListener("click", openProfileEditModal);
@@ -164,18 +155,14 @@ profileEditForm.addEventListener("submit", (e) => {
   profileTitle.textContent = nameInput.value;
   profileDescription.textContent = descriptionInput.value;
   closePopup(profileEditModal);
-
-  const submitButton = e.target.querySelector(
-    validationConfig.submitButtonSelector
-  );
-  submitButton.classList.add(validationConfig.inactiveButtonClass);
-  submitButton.disabled = true;
+  formValidators["profile-form"].resetValidation();
 });
 
 cardFormModal.addEventListener("submit", handleCardFormSubmit);
 addNewCardButton.addEventListener("click", openCardFormModal);
 
 function openCardFormModal() {
+  formValidators["card-form"].resetValidation();
   openPopup(cardFormModal);
 }
 
@@ -189,10 +176,16 @@ function openImageModal(imageSrc, imageAlt) {
 
 renderInitialCards();
 
-document.addEventListener("DOMContentLoaded", () => {
-  const forms = document.querySelectorAll(validationConfig.formSelector);
-  forms.forEach((formElement) => {
-    const formValidator = new FormValidator(validationConfig, formElement);
-    formValidator.enableValidation();
+const formValidators = {};
+
+const enableValidation = (config) => {
+  const formList = Array.from(document.querySelectorAll(config.formSelector));
+  formList.forEach((formElement) => {
+    const validator = new FormValidator(config, formElement);
+    const formName = formElement.getAttribute("name");
+    formValidators[formName] = validator;
+    validator.enableValidation();
   });
-});
+};
+
+enableValidation(validationConfig);
