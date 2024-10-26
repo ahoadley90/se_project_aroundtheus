@@ -37,14 +37,7 @@ const initialCards = [
   },
 ];
 
-const editFormValidator = new FormValidator(
-  validationConfig,
-  document.forms["profile-form"]
-);
-const addCardFormValidator = new FormValidator(
-  validationConfig,
-  document.forms["card-form"]
-);
+const formValidators = {};
 const profileEditButton = document.querySelector("#profile__edit-button");
 const profileEditModal = document.querySelector("#profile__edit_modal");
 const profileEditCloseButton = profileEditModal.querySelector(".modal__close");
@@ -144,7 +137,6 @@ function handleCardFormSubmit(evt) {
   renderCard(cardData, cardListEl);
   closePopup(cardFormModal);
   evt.target.reset();
-  formValidators["card-form"].resetValidation();
   formValidators["card-form"].disableButton();
 }
 
@@ -155,14 +147,13 @@ profileEditForm.addEventListener("submit", (e) => {
   profileTitle.textContent = nameInput.value;
   profileDescription.textContent = descriptionInput.value;
   closePopup(profileEditModal);
-  formValidators["profile-form"].resetValidation();
 });
 
 cardFormModal.addEventListener("submit", handleCardFormSubmit);
 addNewCardButton.addEventListener("click", openCardFormModal);
 
 function openCardFormModal() {
-  formValidators["card-form"].resetValidation();
+  formValidators["card-form"].disableButton();
   openPopup(cardFormModal);
 }
 
@@ -175,8 +166,6 @@ function openImageModal(imageSrc, imageAlt) {
 }
 
 renderInitialCards();
-
-const formValidators = {};
 
 const enableValidation = (config) => {
   const formList = Array.from(document.querySelectorAll(config.formSelector));
