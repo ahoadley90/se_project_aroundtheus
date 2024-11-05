@@ -1,0 +1,80 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  list-style: none;
+  border-radius: 10px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.card__image {
+  height: 282px;
+  width: 282px;
+  object-fit: cover;
+}
+
+.card__description {
+  display: flex;
+  background-color: white;
+  color: black;
+  padding-top: 25px;
+  padding-bottom: 25px;
+  padding-left: 20px;
+  padding-right: 20px;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.card__like-button {
+  background: transparent url(../images/like_button.svg) center;
+  height: 18px;
+  width: 21px;
+  border: none;
+  cursor: pointer;
+}
+
+.card__like-button_active {
+  background-image: url(../images/like_button_active.svg);
+}
+
+.card__like-button:hover {
+  opacity: 0.5;
+  radius: 2px;
+}
+
+.card__delete-button {
+  background: url(../images/Trash-can.svg);
+  border: none;
+  cursor: pointer;
+  padding: 5px;
+  position: absolute;
+  margin-bottom: 590px;
+  margin-left: 230px;
+  height: 19px;
+  width: 18px;
+}
+
+.card__delete-button:hover {
+  opacity: 0.8;
+}
+
+.card__title {
+  max-width: 219px;
+  font-family: "Inter", Arial, "sans-serif";
+  font-weight: 900;
+  font-size: 24px;
+  line-height: 29px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  margin: 0;
+}
+
+@media screen and (max-width: 320px) {
+  .card {
+    max-width: 282px;
+    min-height: 361px;
+    padding: 0;
+  }
+}

@@ -1,0 +1,27 @@
+.footer {
+  display: flex;
+  align-self: flex-start;
+  max-width: 318px;
+}
+
+.footer__description {
+  font-family: "Inter", "Arial", "sans-serif";
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 22px;
+  color: #545454;
+  margin-bottom: 60px;
+  padding: 0;
+  margin-top: 0;
+}
+
+@media screen and (max-width: 320px) {
+  .footer__description {
+    font-size: 14px;
+    line-height: 17px;
+    margin-left: 19px;
+    margin-top: 0px;
+    margin-bottom: 36px;
+    max-width: 282px;
+  }
+}
