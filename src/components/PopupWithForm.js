@@ -26,7 +26,6 @@ export default class PopupWithForm extends Popup {
 
   close() {
     super.close();
-    this._form.reset();
   }
 
   setInputValues(data) {
@@ -34,8 +33,6 @@ export default class PopupWithForm extends Popup {
       input.value = data[input.name];
     });
   }
-
-  // New method to get the form element
   getForm() {
     return this._form;
   }
