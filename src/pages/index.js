@@ -41,6 +41,7 @@ function handleCardFormSubmit(formData) {
   const newCard = createCard({ name: formData.title, link: formData.url });
   cardSection.addItem(newCard);
   addCardPopup.close();
+  addCardPopup.resetForm();
 }
 
 function createCard(data) {
@@ -74,7 +75,6 @@ function openProfileEditModal() {
 }
 
 function openCardFormModal() {
-  formValidators["card-form"].resetValidation();
   addCardPopup.open();
 }
 

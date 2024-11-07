@@ -26,6 +26,7 @@ export default class PopupWithForm extends Popup {
 
   close() {
     super.close();
+    this._form.reset();
   }
 
   setInputValues(data) {
@@ -33,7 +34,17 @@ export default class PopupWithForm extends Popup {
       input.value = data[input.name];
     });
   }
+
   getForm() {
     return this._form;
+  }
+
+  resetForm() {
+    this._form.reset();
+    const submitButton = this._form.querySelector(".modal__button");
+    if (submitButton) {
+      submitButton.classList.add("modal__button_inactive");
+      submitButton.disabled = true;
+    }
   }
 }
