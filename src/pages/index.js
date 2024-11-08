@@ -75,8 +75,6 @@ function openProfileEditModal() {
 }
 
 function openCardFormModal() {
-  formValidators["card-form"].resetValidation();
-  formValidators["card-form"].disableButton();
   addCardPopup.open();
 }
 
