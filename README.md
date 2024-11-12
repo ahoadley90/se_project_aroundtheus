@@ -24,6 +24,8 @@ Good luck and have fun!
 
 This is a video I made going over the project, my implementation of grid, flexbox, as well as utilizing different fonts and adjusting for different screen sizes.
 
-- [link to screen record (https://www.loom.com/share/e224d6f8ccfa43859574237a85e62a1b?sid=e5d113df-787d-4585-b0c5-ad5884fc4ce1)]
+- [link to screen record (https://www.loom.com/share/e224d6f8ccfa43859574237a85e62a1b?sid=e5d113df-787d-4585-b0c5-ad5884fc4ce1)
+  https://www.loom.com/share/9d3686a925814d97bb1aebde5004177e?sid=462857f2-37fd-4cf0-a1a3-266ffaf35baa
+  ]
 
 - This is the link to the project in GitHub (https://ahoadley90.github.io/se_project_aroundtheus/)
