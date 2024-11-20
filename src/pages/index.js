@@ -1,3 +1,4 @@
+import Api from "../components/Api.js";
 import UserInfo from "../components/UserInfo.js";
 import Section from "../components/Section.js";
 import Popup from "../components/Popup.js";
@@ -8,6 +9,13 @@ import FormValidator from "../components/FormValidator.js";
 import "../pages/index.css";
 import { validationConfig, initialCards } from "../utils/constants.js";
 
+const api = new Api({
+  baseUrl: "https://around-api.en.tripleten-services.com/v1",
+  headers: {
+    authorization: "f0941fd9-c5f6-43bc-8de5-e0d1323157dc",
+    "Content-Type": "application/json",
+  },
+});
 const formValidators = {};
 const profileEditButton = document.querySelector("#profile__edit-button");
 const addNewCardButton = document.querySelector(".profile__add-button");
@@ -30,22 +38,44 @@ const userInfo = new UserInfo({
 });
 
 function handleProfileFormSubmit(formData) {
-  userInfo.setUserInfo({
-    name: formData.title,
-    job: formData.description,
-  });
-  profileEditPopup.close();
+  api
+    .updateProfile(formData.title, formData.description)
+    .then((updatedUser) => {
+      userInfo.setUserInfo({
+        name: updatedUser.name,
+        job: updatedUser.about,
+      });
+      profileEditPopup.close();
+    })
+    .catch((err) => console.error("Error updating profile:", err));
 }
 
 function handleCardFormSubmit(formData) {
-  const newCard = createCard({ name: formData.title, link: formData.url });
-  cardSection.addItem(newCard);
-  addCardPopup.close();
-  formValidators["card-form"].disableButton();
+  api
+    .addCard(formData.title, formData.url)
+    .then((newCardData) => {
+      const newCard = createCard(newCardData);
+      cardSection.addItem(newCard);
+      addCardPopup.close();
+      formValidators["card-form"].disableButton();
+    })
+    .catch((err) => console.error("Error adding new card:", err));
 }
 
 function createCard(data) {
-  const card = new Card(data, "#card__template", handleImageClick);
+  const card = new Card(
+    {
+      id: data._id,
+      name: data.name,
+      link: data.link,
+      likes: data.likes,
+      owner: data.owner,
+    },
+    "#card__template",
+    handleImageClick,
+    handleDeleteCard,
+    handleLikeCard
+  );
   return card.generateCard();
 }
 
@@ -53,48 +83,40 @@ function handleImageClick(name, link) {
   imagePopup.open({ name, link });
 }
 
-const cardSection = new Section(
-  {
-    items: initialCards,
-    renderer: (item) => {
-      const cardElement = createCard(item);
-      cardSection.addItem(cardElement);
-    },
-  },
-  cardListSelector
-);
-
-function openProfileEditModal() {
-  const currentUserInfo = userInfo.getUserInfo();
-  profileEditPopup.setInputValues({
-    title: currentUserInfo.name,
-    description: currentUserInfo.job,
-  });
-  formValidators["profile-form"].resetValidation();
-  profileEditPopup.open();
+function handleDeleteCard(cardId) {
+  api
+    .deleteCard(cardId)
+    .then(() => {})
+    .catch((err) => console.error("Error deleting card:", err));
 }
 
-function openCardFormModal() {
-  addCardPopup.open();
+function handleLikeCard(cardId, isLiked) {
+  const likeMethod = isLiked ? api.unlikeCard : api.likeCard;
+  likeMethod(cardId)
+    .then((updatedCard) => {})
+    .catch((err) => console.error("Error updating like status:", err));
 }
+let cardSection;
 
-profileEditButton.addEventListener("click", openProfileEditModal);
-addNewCardButton.addEventListener("click", openCardFormModal);
+api
+  .getAppInfo()
+  .then(([userData, initialCards]) => {
+    userInfo.setUserInfo({
+      name: userData.name,
+      job: userData.about,
+      avatar: userData.avatar,
+    });
 
-profileEditPopup.setEventListeners();
-addCardPopup.setEventListeners();
-imagePopup.setEventListeners();
-
-const enableValidation = (config) => {
-  const formList = Array.from(document.querySelectorAll(config.formSelector));
-  formList.forEach((formElement) => {
-    const validator = new FormValidator(config, formElement);
-    const formName = formElement.getAttribute("name");
-    formValidators[formName] = validator;
-    validator.enableValidation();
-  });
-};
-
-enableValidation(validationConfig);
-
-cardSection.renderItems();
+    cardSection = new Section(
+      {
+        items: initialCards,
+        renderer: (item) => {
+          const cardElement = createCard(item);
+          cardSection.addItem(cardElement);
+        },
+      },
+      cardListSelector
+    );
+    cardSection.renderItems();
+  })
+  .catch((err) => console.error("Error initializing app:", err));
