@@ -16,6 +16,7 @@ const api = new Api({
     "Content-Type": "application/json",
   },
 });
+
 const formValidators = {};
 const profileEditButton = document.querySelector("#profile__edit-button");
 const addNewCardButton = document.querySelector(".profile__add-button");
@@ -37,9 +38,22 @@ const userInfo = new UserInfo({
   jobSelector: ".profile__description",
 });
 
+api
+  .getUserInfo()
+  .then((userData) => {
+    userInfo.setUserInfo({
+      name: userData.name,
+      job: userData.about,
+      avatar: userData.avatar,
+    });
+  })
+  .catch((error) => {
+    console.error("Error fetching user data:", error);
+  });
+
 function handleProfileFormSubmit(formData) {
   api
-    .updateProfile(formData.title, formData.description)
+    .updateProfile(formData.name, formData.about)
     .then((updatedUser) => {
       userInfo.setUserInfo({
         name: updatedUser.name,
@@ -47,19 +61,22 @@ function handleProfileFormSubmit(formData) {
       });
       profileEditPopup.close();
     })
-    .catch((err) => console.error("Error updating profile:", err));
+    .catch((error) => {
+      console.error("Error updating profile:", error);
+    });
 }
 
-function handleCardFormSubmit(formData) {
+function handleAddCardFormSubmit(formData) {
   api
-    .addCard(formData.title, formData.url)
-    .then((newCardData) => {
-      const newCard = createCard(newCardData);
-      cardSection.addItem(newCard);
+    .addCard(formData.name, formData.link)
+    .then((newCard) => {
+      const cardElement = createCard(newCard);
+      cardSection.addItem(cardElement);
       addCardPopup.close();
-      formValidators["card-form"].disableButton();
     })
-    .catch((err) => console.error("Error adding new card:", err));
+    .catch((error) => {
+      console.error("Error adding new card:", error);
+    });
 }
 
 function createCard(data) {

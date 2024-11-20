@@ -1,8 +1,8 @@
 export default class Api {
-    constructor({ baseUrl, headers }) {
-      this._baseUrl = baseUrl;
-      this._headers = headers;
-    }
+  constructor({ baseUrl, headers }) {
+    this._baseUrl = baseUrl;
+    this._headers = headers;
+  }
 
   _checkResponse(res) {
     if (res.ok) {
@@ -13,12 +13,15 @@ export default class Api {
 
   getUserInfo() {
     return fetch(`${this._baseUrl}/users/me`, {
-      headers: this._headers
-    })
-    .then(this._checkResponse);
+      headers: this._headers,
+    }).then(this._checkResponse);
   }
 
-
+  getInitialCards() {
+    return fetch(`${this._baseUrl}/cards`, {
+      headers: this._headers,
+    }).then(this._checkResponse);
+  }
   updateProfile(name, about) {
     return fetch(`${this._baseUrl}/users/me`, {
       method: "PATCH",
@@ -30,27 +33,6 @@ export default class Api {
     }).then(this._checkResponse);
   }
 
-  updateAvatar(avatar) {
-    return fetch(`${this._baseUrl}/users/me/avatar`, {
-      method: "PATCH",
-      headers: this._headers,
-      body: JSON.stringify({
-        avatar,
-      }),
-    }).then(this._checkResponse);
-  }
-
-  // Card routes
-  getAppInfo() {
-    return Promise.all([this.getUserInfo(), this.getInitialCards()]);
-  }
-
-  getInitialCards() {
-    return fetch(`${this._baseUrl}/cards`, {
-      headers: this._headers
-    })
-    .then(this._checkResponse);
-  }
   addCard(name, link) {
     return fetch(`${this._baseUrl}/cards`, {
       method: "POST",
@@ -82,14 +64,10 @@ export default class Api {
       headers: this._headers,
     }).then(this._checkResponse);
   }
+
+  getAppInfo() {
+    return Promise.all([this.getUserInfo(), this.getInitialCards()]);
+  }
 }
 
-const api = new Api({
-  baseUrl: "https://around-api.en.tripleten-services.com/v1",
-  headers: {
-    authorization: "c56e30dc-2883-4270-a59e-b2f7bae969c6",
-    "Content-Type": "application/json",
-  },
-});
-
-export default api;
+export { api };
