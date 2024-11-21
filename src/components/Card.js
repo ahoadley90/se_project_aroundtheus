@@ -1,55 +1,104 @@
 export default class Card {
-  constructor(data, cardSelector, handleImageClick) {
+  constructor({ data, handleCardClick, handleDeleteClick, handleLikeClick, userId }, templateSelector) {
     this._name = data.name;
     this._link = data.link;
-    this._cardSelector = cardSelector;
-    this._handleImageClick = handleImageClick;
-    this._element = null;
-    this._cardImage = null;
-    this._cardTitle = null;
-    this._likeButton = null;
-    this._deleteButton = null;
+    this._likes = data.likes || [];
+    this._id = data._id;
+    this._ownerId = data.owner ? data.owner._id : null;
+    this._userId = userId;
+    this._handleCardClick = handleCardClick;
+    this._handleDeleteClick = handleDeleteClick;
+    this._handleLikeClick = handleLikeClick;
+    this._templateSelector = templateSelector;
   }
 
   _getTemplate() {
     return document
-      .querySelector(this._cardSelector)
-      .content.querySelector(".card")
+      .querySelector(this._templateSelector)
+      .content
+      .querySelector(".card")
       .cloneNode(true);
-  }
-
-  _setEventListeners() {
-    this._likeButton.addEventListener("click", () => this._handleLikeClick());
-    this._deleteButton.addEventListener("click", () =>
-      this._handleDeleteClick()
-    );
-    this._cardImage.addEventListener("click", () =>
-      this._handleImageClick(this._name, this._link)
-    );
-  }
-
-  _handleLikeClick() {
-    this._likeButton.classList.toggle("card__like-button_active");
-  }
-
-  _handleDeleteClick() {
-    this._element.remove();
-    this._element = null;
   }
 
   generateCard() {
     this._element = this._getTemplate();
-    this._cardImage = this._element.querySelector(".card__image");
-    this._cardTitle = this._element.querySelector(".card__title");
-    this._likeButton = this._element.querySelector(".card__like-button");
-    this._deleteButton = this._element.querySelector(".card__delete-button");
-
-    this._cardImage.src = this._link;
-    this._cardImage.alt = this._name;
-    this._cardTitle.textContent = this._name;
-
     this._setEventListeners();
 
+    const cardImage = this._element.querySelector(".card__image");
+    const cardTitle = this._element.querySelector(".card__title");
+
+    if (cardImage) {
+      cardImage.src = this._link;
+      cardImage.alt = this._name;
+    }
+    if (cardTitle) {
+      cardTitle.textContent = this._name;
+    }
+
+    this._renderLikes();
+
+    const deleteButton = this._element.querySelector(".card__delete-button");
+    if (deleteButton && this._ownerId !== this._userId) {
+      deleteButton.style.display = "none";
+    }
+
     return this._element;
+  }
+
+  _setEventListeners() {
+    const cardImage = this._element.querySelector(".card__image");
+    const deleteButton = this._element.querySelector(".card__delete-button");
+    const likeButton = this._element.querySelector(".card__like-button");
+
+    if (cardImage) {
+      cardImage.addEventListener("click", () => {
+        this._handleCardClick(this._name, this._link);
+      });
+    }
+
+    if (deleteButton) {
+      deleteButton.addEventListener("click", () => {
+        this._handleDeleteClick(this._id);
+      });
+    }
+
+    if (likeButton) {
+      likeButton.addEventListener("click", () => {
+        this._handleLikeClick(this._id, this.isLiked());
+      });
+    }
+  }
+
+  _renderLikes() {
+    const likeCountElement = this._element.querySelector(".card__like-count");
+    const likeButton = this._element.querySelector(".card__like-button");
+
+    if (likeCountElement) {
+      likeCountElement.textContent = this._likes.length;
+    }
+
+    if (likeButton) {
+      if (this.isLiked()) {
+        likeButton.classList.add("card__like-button_active");
+      } else {
+        likeButton.classList.remove("card__like-button_active");
+      }
+    }
+  }
+
+  isLiked() {
+    return this._likes.some((like) => like._id === this._userId);
+  }
+
+  updateLikes(newLikes) {
+    this._likes = newLikes;
+    this._renderLikes();
+  }
+
+  removeCard() {
+    if (this._element) {
+      this._element.remove();
+      this._element = null;
+    }
   }
 }
