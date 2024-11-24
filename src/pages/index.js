@@ -7,6 +7,12 @@ import PopupWithForm from "../components/PopupWithForm.js";
 import UserInfo from "../components/UserInfo.js";
 import Api from "../components/Api.js";
 import { validationConfig } from "../utils/constants.js";
+import PopupWithConfirmation from "../components/PopupWithConfirmation.js";
+
+const deleteCardPopup = new PopupWithConfirmation(
+  "#delete-card-modal",
+  handleDeleteCard
+);
 
 const api = new Api({
   baseUrl: "https://around-api.en.tripleten-services.com/v1",
@@ -39,6 +45,7 @@ const editAvatarPopup = new PopupWithForm(
 
 let cardList;
 
+// prettier-ignore
 function createCard(cardData) {
   const card = new Card(
     {
@@ -47,8 +54,7 @@ function createCard(cardData) {
         imagePopup.open(name, link);
       },
       handleDeleteClick: (cardId) => {
-        api
-          .deleteCard(cardId)
+        api.deleteCard(cardId)
           .then(() => {
             card.removeCard();
           })
@@ -72,10 +78,22 @@ function createCard(cardData) {
   return card.generateCard();
 }
 
+// prettier-ignore
+function handleDeleteCard() {
+  const cardId = deleteCardPopup._cardId;
+  api.deleteCard(cardId)
+    .then(() => {
+      const cardElement = document.querySelector(`[data-card-id="${cardId}"]`);
+      cardElement.remove();
+      deleteCardPopup.close();
+    })
+    .catch((err) => console.error(err));
+}
+
 function handleProfileFormSubmit(formData) {
   editProfilePopup.renderLoading(true);
   api
-    .setUserInfo(formData)
+    .setUserInfo({ name: formData.name, about: formData.about })
     .then((updatedUser) => {
       userInfo.setUserInfo(updatedUser);
       editProfilePopup.close();
@@ -114,15 +132,15 @@ Promise.all([api.getUserInfo(), api.getInitialCards()])
       {
         items: initialCards,
         renderer: (item) => {
-          const card = createCard(item);
-          cardList.addItem(card);
+          const cardElement = createCard(item);
+          cardList.addItem(cardElement);
         },
       },
       ".cards__list"
     );
     cardList.renderItems();
   })
-  .catch((err) => console.error("Error initializing data:", err));
+  .catch((err) => console.error(err));
 
 // prettier-ignore
 document.querySelector(".profile__edit-button").addEventListener("click", () => {
@@ -158,3 +176,4 @@ imagePopup.setEventListeners();
 editProfilePopup.setEventListeners();
 addCardPopup.setEventListeners();
 editAvatarPopup.setEventListeners();
+deleteCardPopup.setEventListeners();

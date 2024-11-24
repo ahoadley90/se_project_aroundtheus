@@ -1,9 +1,13 @@
 export default class Card {
-  constructor({ data, handleCardClick, handleDeleteClick, handleLikeClick, userId }, templateSelector) {
+  constructor(
+    { data, handleCardClick, handleDeleteClick, handleLikeClick, userId },
+    templateSelector
+  ) {
     this._name = data.name;
     this._link = data.link;
     this._likes = data.likes || [];
     this._id = data._id;
+    this._cardId = data._id;
     this._ownerId = data.owner ? data.owner._id : null;
     this._userId = userId;
     this._handleCardClick = handleCardClick;
@@ -15,8 +19,7 @@ export default class Card {
   _getTemplate() {
     return document
       .querySelector(this._templateSelector)
-      .content
-      .querySelector(".card")
+      .content.querySelector(".card")
       .cloneNode(true);
   }
 
@@ -26,6 +29,8 @@ export default class Card {
 
     const cardImage = this._element.querySelector(".card__image");
     const cardTitle = this._element.querySelector(".card__title");
+    this._likeButton = this._element.querySelector(".card__like-button");
+    this._likeCount = this._element.querySelector(".card__like-count");
 
     if (cardImage) {
       cardImage.src = this._link;
@@ -48,7 +53,7 @@ export default class Card {
   _setEventListeners() {
     const cardImage = this._element.querySelector(".card__image");
     const deleteButton = this._element.querySelector(".card__delete-button");
-    const likeButton = this._element.querySelector(".card__like-button");
+    this._likeButton = this._element.querySelector(".card__like-button");
 
     if (cardImage) {
       cardImage.addEventListener("click", () => {
@@ -62,9 +67,9 @@ export default class Card {
       });
     }
 
-    if (likeButton) {
-      likeButton.addEventListener("click", () => {
-        this._handleLikeClick(this._id, this.isLiked());
+    if (this._likeButton) {
+      this._likeButton.addEventListener("click", () => {
+        this._handleLikeClick(this._id, !this.isLiked());
       });
     }
   }
