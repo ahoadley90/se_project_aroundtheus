@@ -1,4 +1,4 @@
-import Popup from './Popup.js';
+import Popup from "./Popup.js";
 
 export default class PopupWithForm extends Popup {
   constructor(popupSelector, handleFormSubmit) {
@@ -7,6 +7,7 @@ export default class PopupWithForm extends Popup {
     this._form = this._popup.querySelector(".modal__form");
     this._inputs = this._form.querySelectorAll(".modal__input");
     this._submitButton = this._form.querySelector(".modal__button");
+    this._submitButton.dataset.originalText = this._submitButton.textContent;
   }
 
   _getInputValues() {
@@ -39,8 +40,10 @@ export default class PopupWithForm extends Popup {
   renderLoading(isLoading, loadingText = "Saving...") {
     if (isLoading) {
       this._submitButton.textContent = loadingText;
+      this._submitButton.disabled = true;
     } else {
-      this._submitButton.textContent = "Save";
+      this._submitButton.textContent = this._submitButton.dataset.originalText;
+      this._submitButton.disabled = false;
     }
   }
 }
