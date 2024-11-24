@@ -54,11 +54,7 @@ function createCard(cardData) {
         imagePopup.open(name, link);
       },
       handleDeleteClick: (cardId) => {
-        api.deleteCard(cardId)
-          .then(() => {
-            card.removeCard();
-          })
-          .catch((err) => console.error(err));
+        deleteCardPopup.open(cardId);
       },
       handleLikeClick: (cardId, isLiked) => {
         const likeMethod = isLiked
@@ -89,11 +85,10 @@ function handleDeleteCard() {
     })
     .catch((err) => console.error(err));
 }
-
+// prettier-ignore
 function handleProfileFormSubmit(formData) {
   editProfilePopup.renderLoading(true);
-  api
-    .setUserInfo({ name: formData.name, about: formData.about })
+  api.setUserInfo({ name: formData.name, about: formData.about })
     .then((updatedUser) => {
       userInfo.setUserInfo(updatedUser);
       editProfilePopup.close();
