@@ -99,7 +99,7 @@ function handleProfileFormSubmit(formData) {
 // prettier-ignore
 function handleAddCardFormSubmit(formData) {
   addCardPopup.renderLoading(true);
-  api.addCard(formData)
+  api.addCard({ name: formData.title, link: formData.url })
     .then((newCard) => {
       const cardElement = createCard(newCard);
       cardList.addItem(cardElement);

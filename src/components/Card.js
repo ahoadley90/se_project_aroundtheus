@@ -42,11 +42,6 @@ export default class Card {
 
     this._renderLikes();
 
-    const deleteButton = this._element.querySelector(".card__delete-button");
-    if (deleteButton && this._ownerId !== this._userId) {
-      deleteButton.style.display = "none";
-    }
-
     return this._element;
   }
 
