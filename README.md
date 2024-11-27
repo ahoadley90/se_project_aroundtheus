@@ -29,3 +29,7 @@ This is a video I made going over the project, my implementation of grid, flexbo
   ]
 
 - This is the link to the project in GitHub (https://ahoadley90.github.io/se_project_aroundtheus/)
+
+## Live Demo
+
+Check out the live demo of the project [here](https://ahoadley90.github.io/se_project_aroundtheus/).
