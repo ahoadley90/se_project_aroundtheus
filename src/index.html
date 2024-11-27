@@ -17,12 +17,20 @@
 
       <main class="content">
         <section class="profile">
-          <img
-            src="<%= require('./images/Avatar-min.png') %>"
-            alt="avatar of
-          jacques cousteau"
-            class="profile__image"
-          />
+          <div class="profile__image-container">
+            <img
+              src="<%= require('./images/Avatar-min.png') %>"
+              alt="avatar of jacques cousteau"
+              class="profile__image"
+            />
+            <div class="profile__image-edit-overlay">
+              <img
+                src="<%= require('./images/Pencil-icon.svg') %>"
+                alt="Edit profile picture"
+                class="profile__image-edit-icon"
+              />
+            </div>
+          </div>
           <div class="profile__info">
             <h1 class="profile__title">Jaques Cousteau</h1>
             <button
@@ -156,7 +164,9 @@
             required
           />
           <span class="modal__error" id="avatar-input-error"></span>
-          <button type="submit" class="modal__button">Save</button>
+          <button type="submit" class="modal__button modal__button_save">
+            Save
+          </button>
         </form>
       </div>
     </div>

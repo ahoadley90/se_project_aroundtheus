@@ -151,7 +151,11 @@ document.querySelector(".profile__add-button").addEventListener("click", () => {
 document.querySelector(".profile__image").addEventListener("click", () => {
   editAvatarPopup.open();
 });
-// Enable form validation
+document
+  .querySelector(".profile__image-container")
+  .addEventListener("click", () => {
+    editAvatarPopup.open();
+  });
 const formValidators = {};
 
 const enableValidation = (config) => {
