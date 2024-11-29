@@ -36,6 +36,40 @@
   min-height: 330px;
 }
 
+.modal__container_avatar {
+  position: relative;
+  border: none;
+  background-color: white;
+  padding: 36px;
+  border-radius: 10px;
+  color: #000;
+  width: 430px;
+  border: 1px solid #000;
+  box-sizing: border-box;
+  margin-top: 0;
+  transform: translateY(-50px);
+  transition: transform 0.3s ease;
+  max-height: 272px;
+  justify-content: space-between;
+}
+
+.modal__button.modal__button_save_avatar {
+  width: 358px;
+  height: 50px;
+  radius: 2px;
+  background-color: black;
+  color: white;
+  margin-bottom: 36px;
+  weight: 400;
+  font-size: 18px;
+  line-height: 22px;
+  box-sizing: border-box;
+  display: block;
+  text-align: center;
+  cursor: pointer;
+  margin-top: 0;
+}
+
 .modal_opened .modal__container {
   transform: translateY(0);
 }

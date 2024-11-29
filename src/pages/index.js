@@ -47,31 +47,46 @@ let cardList;
 
 // prettier-ignore
 function createCard(cardData) {
-  const card = new Card(
-    {
-      data: cardData,
-      handleCardClick: (name, link) => {
-        imagePopup.open(name, link);
-      },
-      handleDeleteClick: (cardId) => {
-        deleteCardPopup.open(cardId);
-      },
-      handleLikeClick: (cardId, isLiked) => {
-        const likeMethod = isLiked
-          ? api.removeLike.bind(api)
-          : api.addLike.bind(api);
-        likeMethod(cardId)
-          .then((updatedCard) => {
-            card.updateLikes(updatedCard.likes);
-          })
-          .catch((err) => console.error(err));
-      },
-      userId: userInfo.getUserId(),
+  const card = new Card({
+    data: cardData,
+    handleCardClick: (name, link) => {
+      imagePopup.open(name, link);
     },
-    cardTemplateSelector
-  );
+    handleDeleteClick: (cardId) => {
+      deleteCardPopup.open(cardId);
+    },
+    handleLikeClick: (cardId, isLiked) => {
+      handleLikeClick(cardId, isLiked);
+    },
+    userId: userInfo.getUserId(),
+  }, cardTemplateSelector);
 
-  return card.generateCard();
+  const cardElement = card.generateCard();
+  cardElement.cardInstance = card;
+  cardElement.dataset.cardId = cardData._id;
+  return cardElement;
+}
+
+function handleLikeClick(cardId, isLiked) {
+  console.log("handleLikeClick called with:", cardId, isLiked);
+
+  const cardElement = document.querySelector(`[data-card-id="${cardId}"]`);
+  const cardInstance = cardElement ? cardElement.cardInstance : null;
+
+  if (!cardInstance) {
+    console.error("Card instance not found for card:", cardId);
+    return;
+  }
+
+  const likeMethod = isLiked
+    ? api.unlikeCard.bind(api)
+    : api.likeCard.bind(api);
+  likeMethod(cardId)
+    .then((updatedCard) => {
+      console.log("API response:", updatedCard);
+      cardInstance.updateLikes(updatedCard);
+    })
+    .catch((err) => console.error("Error updating like status:", err));
 }
 
 // prettier-ignore
