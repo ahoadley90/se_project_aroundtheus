@@ -16,7 +16,7 @@ export default class PopupWithForm extends Popup {
     inputList.forEach((input) => {
       formValues[input.name] = input.value;
     });
-    console.log("Collected form values:", formValues); // Add this line
+    console.log("Collected form values:", formValues);
     return formValues;
   }
 
