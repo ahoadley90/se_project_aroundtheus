@@ -9,10 +9,21 @@ import Api from "../components/Api.js";
 import { validationConfig } from "../utils/constants.js";
 import PopupWithConfirmation from "../components/PopupWithConfirmation.js";
 
+let cardList;
+
 const deleteCardPopup = new PopupWithConfirmation(
   "#delete-card-modal",
   handleDeleteCard
 );
+function handleDeleteCard(card) {
+  return api
+    .deleteCard(card.getId())
+    .then(() => {
+      card.removeCard();
+      deleteCardPopup.close();
+    })
+    .catch((err) => console.error("Error deleting card:", err));
+}
 
 const api = new Api({
   baseUrl: "https://around-api.en.tripleten-services.com/v1",
@@ -43,74 +54,39 @@ const editAvatarPopup = new PopupWithForm(
   handleAvatarFormSubmit
 );
 
-let cardList;
-
-// prettier-ignore
-function createCard(cardData) {
-  const card = new Card({
-    data: cardData,
-    handleCardClick: (name, link) => {
-      imagePopup.open(name, link);
-    },
-    handleDeleteClick: (cardId) => {
-      deleteCardPopup.open(cardId);
-    },
-    handleLikeClick: (cardId, isLiked) => {
-      handleLikeClick(cardId, isLiked);
-    },
-    userId: userInfo.getUserId(),
-  }, cardTemplateSelector);
-
-  const cardElement = card.generateCard();
-  cardElement.cardInstance = card;
-  cardElement.dataset.cardId = cardData._id;
-  return cardElement;
-}
-
-function handleLikeClick(cardId, isLiked) {
-  console.log("handleLikeClick called with:", cardId, isLiked);
-
-  const cardElement = document.querySelector(`[data-card-id="${cardId}"]`);
-  const cardInstance = cardElement ? cardElement.cardInstance : null;
-
-  if (!cardInstance) {
-    console.error("Card instance not found for card:", cardId);
-    return;
-  }
-
-  const likeMethod = isLiked
-    ? api.unlikeCard.bind(api)
-    : api.likeCard.bind(api);
-  likeMethod(cardId)
-    .then((updatedCard) => {
-      console.log("API response:", updatedCard);
-      cardInstance.updateLikes(updatedCard);
-    })
-    .catch((err) => console.error("Error updating like status:", err));
-}
-
-// prettier-ignore
-function handleDeleteCard() {
-  const cardId = deleteCardPopup._cardId;
-  api.deleteCard(cardId)
-    .then(() => {
-      const cardElement = document.querySelector(`[data-card-id="${cardId}"]`);
-      cardElement.remove();
-      deleteCardPopup.close();
-    })
-    .catch((err) => console.error(err));
-}
-// prettier-ignore
+//prettier-ignore
 function handleProfileFormSubmit(formData) {
+  console.log("Profile form data:", formData);
+  console.log("Name:", formData.name);
+  console.log("About:", formData.about);
   editProfilePopup.renderLoading(true);
-  api.setUserInfo({ name: formData.name, about: formData.about })
+  api.setUserInfo(formData)
     .then((updatedUser) => {
+      console.log("Updated user data:", updatedUser);
       userInfo.setUserInfo(updatedUser);
       editProfilePopup.close();
     })
-    .catch((err) => console.error(err))
+    .catch((err) => {
+      console.error("Error updating profile:", err);
+    })
     .finally(() => editProfilePopup.renderLoading(false));
 }
+//prettier-ignore
+function handleAvatarFormSubmit(formData) {
+  editAvatarPopup.renderLoading(true);
+  api.updateAvatar(formData.avatar)
+    .then((updatedUser) => {
+      userInfo.setUserInfo(updatedUser);
+      editAvatarPopup.close();
+    })
+    .catch((err) => {
+      console.error("Error updating avatar:", err);
+    })
+    .finally(() => {
+      editAvatarPopup.renderLoading(false);
+    });
+}
+
 // prettier-ignore
 function handleAddCardFormSubmit(formData) {
   addCardPopup.renderLoading(true);
@@ -120,19 +96,10 @@ function handleAddCardFormSubmit(formData) {
       cardList.addItem(cardElement);
       addCardPopup.close();
     })
-    .catch((err) => console.error(err))
-    .finally(() => addCardPopup.renderLoading(false));
-}
-// prettier-ignore
-function handleAvatarFormSubmit(formData) {
-  editAvatarPopup.renderLoading(true);
-  api.updateAvatar(formData.avatar)
-    .then((updatedUser) => {
-      userInfo.setUserInfo(updatedUser);
-      editAvatarPopup.close();
+    .catch((err) => {
+      console.error("Error adding card:", err);
     })
-    .catch((err) => console.error(err))
-    .finally(() => editAvatarPopup.renderLoading(false));
+    .finally(() => addCardPopup.renderLoading(false));
 }
 // Initialize all data
 Promise.all([api.getUserInfo(), api.getInitialCards()])
@@ -158,17 +125,16 @@ document.querySelector(".profile__edit-button").addEventListener("click", () => 
   editProfilePopup.setInputValues({ name, about });
   editProfilePopup.open();
 });
-
 document.querySelector(".profile__add-button").addEventListener("click", () => {
   addCardPopup.open();
 });
-
+//prettier-ignore
 document.querySelector(".profile__image").addEventListener("click", () => {
   editAvatarPopup.open();
 });
-document
-  .querySelector(".profile__image-container")
-  .addEventListener("click", () => {
+
+//prettier-ignore
+document.querySelector(".profile__image-container").addEventListener("click", () => {
     editAvatarPopup.open();
   });
 const formValidators = {};
@@ -191,3 +157,34 @@ editProfilePopup.setEventListeners();
 addCardPopup.setEventListeners();
 editAvatarPopup.setEventListeners();
 deleteCardPopup.setEventListeners();
+
+// prettier-ignore
+function createCard(cardData) {
+  const card = new Card({
+    data: cardData,
+    handleCardClick: (name, link) => {
+      imagePopup.open(name, link);
+    },
+    handleDeleteClick: (card) => {
+      deleteCardPopup.open(card);
+    },
+    handleLikeClick: (card) => {
+      if (card.isLiked()) {
+        api.unlikeCard(card.getId())
+          .then((res) => {
+            card.setLikes(res.likes);
+          })
+          .catch((err) => console.error("Error unliking card:", err));
+      } else {
+        api.likeCard(card.getId())
+          .then((res) => {
+            card.setLikes(res.likes);
+          })
+          .catch((err) => console.error("Error liking card:", err));
+      }
+    },
+    userId: userInfo.getUserId()
+  }, cardTemplateSelector);
+
+  return card.generateCard();
+}

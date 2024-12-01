@@ -11,11 +11,13 @@ export default class PopupWithForm extends Popup {
   }
 
   _getInputValues() {
-    const inputValues = {};
-    this._inputs.forEach((input) => {
-      inputValues[input.name] = input.value;
+    const inputList = this._form.querySelectorAll(".modal__input");
+    const formValues = {};
+    inputList.forEach((input) => {
+      formValues[input.name] = input.value;
     });
-    return inputValues;
+    console.log("Collected form values:", formValues); // Add this line
+    return formValues;
   }
 
   setEventListeners() {

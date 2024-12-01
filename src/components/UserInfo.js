@@ -11,18 +11,25 @@ export default class UserInfo {
       name: this._nameElement.textContent,
       about: this._jobElement.textContent,
       avatar: this._avatarElement.src,
-      _id: this._userId
+      id: this._userId,
     };
   }
 
   setUserInfo({ name, about, avatar, _id }) {
-    if (name) this._nameElement.textContent = name;
-    if (about) this._jobElement.textContent = about;
-    if (avatar) this._avatarElement.src = avatar;
-    if (_id) this._userId = _id;
+    this._nameElement.textContent = name;
+    this._jobElement.textContent = about;
+    if (avatar) {
+      this._avatarElement.src = avatar;
+    }
+    this._userId = _id;
   }
 
   getUserId() {
     return this._userId;
   }
 }
+const userInfo = new UserInfo({
+  nameSelector: ".profile__title",
+  jobSelector: ".profile__description",
+  avatarSelector: ".profile__image",
+});

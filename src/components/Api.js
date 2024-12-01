@@ -25,11 +25,20 @@ export default class Api {
   }
 
   setUserInfo({ name, about }) {
+    console.log("Sending user info:", { name, about });
     return fetch(`${this._baseUrl}/users/me`, {
       method: "PATCH",
       headers: this._headers,
       body: JSON.stringify({ name, about }),
-    }).then(this._checkResponse);
+    })
+      .then((res) => {
+        console.log("Response status:", res.status);
+        return this._checkResponse(res);
+      })
+      .then((data) => {
+        console.log("Received data:", data);
+        return data;
+      });
   }
 
   addCard({ name, link }) {
@@ -40,25 +49,40 @@ export default class Api {
     }).then(this._checkResponse);
   }
 
-  deleteCard(cardId) {
-    return fetch(`${this._baseUrl}/cards/${cardId}`, {
-      method: "DELETE",
-      headers: this._headers,
-    }).then(this._checkResponse);
-  }
-
   likeCard(cardId) {
     return fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
       method: "PUT",
       headers: this._headers,
-    }).then(this._checkResponse);
+    })
+      .then(this._checkResponse)
+      .then((data) => {
+        console.log("Like card response:", data);
+        return data;
+      });
   }
 
   unlikeCard(cardId) {
     return fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
       method: "DELETE",
       headers: this._headers,
-    }).then(this._checkResponse);
+    })
+      .then(this._checkResponse)
+      .then((data) => {
+        console.log("Unlike card response:", data);
+        return data;
+      });
+  }
+
+  unlikeCard(cardId) {
+    return fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
+      method: "DELETE",
+      headers: this._headers,
+    })
+      .then(this._checkResponse)
+      .then((data) => {
+        console.log("Unlike card response:", data);
+        return { ...data, isLiked: false };
+      });
   }
   updateAvatar(avatar) {
     return fetch(`${this._baseUrl}/users/me/avatar`, {
