@@ -41,12 +41,12 @@ export default class Card {
     this._element.querySelector(".card__title").textContent = this._name;
 
     // Show/hide delete button based on ownership
-  if (this._ownerId !== this._userId) {
-    console.log("Hiding delete button");
-    this._deleteButton.style.display = "none";
-  } else {
-    console.log("Showing delete button");
-  }
+    if (this._ownerId !== this._userId) {
+      console.log("Hiding delete button");
+      this._deleteButton.style.display = "none";
+    } else {
+      console.log("Showing delete button");
+    }
 
     return this._element;
   }
@@ -69,6 +69,7 @@ export default class Card {
       this._handleLikeClick(this._id, !this._isLiked);
     });
   }
+
   updateLikes(updatedCard) {
     console.log("Updating likes:", updatedCard);
     if (updatedCard) {
@@ -98,14 +99,9 @@ export default class Card {
   isLiked() {
     return this._isLiked;
   }
+
   removeCard() {
     this._element.remove();
     this._element = null;
   }
-}
-  return card.generateCard();
-}
-removeCard() {
-  this._element.remove();
-  this._element = null;
 }
