@@ -8,7 +8,7 @@ export default class Card {
     this._id = data._id;
     this._likes = data.likes || [];
     this._userId = userId;
-    this._ownerId = data.owner ? data.owner._id : null;
+    this._ownerId = data.owner._id;
     this._handleCardClick = handleCardClick;
     this._handleDeleteClick = handleDeleteClick;
     this._handleLikeClick = handleLikeClick;
@@ -21,6 +21,8 @@ export default class Card {
     const cardElement = document.querySelector(this._cardSelector)
       .content.querySelector(".card")
       .cloneNode(true);
+
+      cardElement.querySelector(".card__delete-button").classList.remove("card__delete-button_hidden");
 
     return cardElement;
   }

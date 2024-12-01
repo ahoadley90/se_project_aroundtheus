@@ -11,6 +11,8 @@ import PopupWithConfirmation from "../components/PopupWithConfirmation.js";
 
 let cardList;
 
+const formValidators = {};
+
 const deleteCardPopup = new PopupWithConfirmation(
   "#delete-card-modal",
   handleDeleteCard
@@ -126,6 +128,9 @@ document.querySelector(".profile__edit-button").addEventListener("click", () => 
   editProfilePopup.open();
 });
 document.querySelector(".profile__add-button").addEventListener("click", () => {
+  if (formValidators["add-card-form"]) {
+    formValidators["add-card-form"].resetValidation();
+  }
   addCardPopup.open();
 });
 //prettier-ignore
@@ -137,7 +142,6 @@ document.querySelector(".profile__image").addEventListener("click", () => {
 document.querySelector(".profile__image-container").addEventListener("click", () => {
     editAvatarPopup.open();
   });
-const formValidators = {};
 
 const enableValidation = (config) => {
   const formList = Array.from(document.querySelectorAll(config.formSelector));
@@ -183,7 +187,6 @@ function createCard(cardData) {
           .catch((err) => console.error("Error liking card:", err));
       }
     },
-    userId: userInfo.getUserId()
   }, cardTemplateSelector);
 
   return card.generateCard();

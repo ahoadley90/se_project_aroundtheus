@@ -36,6 +36,29 @@
   min-height: 330px;
 }
 
+.modal__container_delete-card {
+  position: relative;
+  background-color: white;
+  padding: 36px;
+  border-radius: 10px;
+  color: #000;
+  width: 430px;
+  box-sizing: border-box;
+}
+
+.modal__container_delete-card .modal__close {
+  position: absolute;
+  top: -40px;
+  right: -40px;
+  width: 40px;
+  height: 40px;
+  background-image: url(../images/Close\ Icon.svg);
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
 .modal__container_avatar {
   position: relative;
   border: none;
@@ -67,7 +90,12 @@
   display: block;
   text-align: center;
   cursor: pointer;
-  margin-top: 0;
+  margin-top: -15px;
+}
+
+.modal__button.modal__button_save_avatar:hover {
+  opacity: 0.8;
+  transition: opacity 0.3s ease;
 }
 
 .modal_opened .modal__container {
@@ -335,5 +363,56 @@
     margin-righ: 22px;
     box-sizing: border-box;
     word-wrap: break-word;
+  }
+
+  .modal__container_delete-card {
+    width: 262px;
+    padding: 0;
+    margin: 0;
+  }
+
+  .modal__button.modal__button_delete {
+    width: 238px;
+    height: 36px;
+    font-size: 14px;
+    line-height: 17px;
+    padding: 0;
+    margin: 0 auto 22px;
+    display: block;
+  }
+  .modal__container_avatar {
+    width: 282px;
+    height: auto;
+    padding: 25px 22px;
+    box-sizing: border-box;
+  }
+
+  .modal__container_avatar .modal__close {
+    width: 26px;
+    height: 26px;
+    top: -39px;
+    right: 0;
+    left: auto;
+  }
+
+  .modal__container_avatar .modal__heading {
+    font-size: 18px;
+    line-height: 22px;
+    margin-bottom: 36px;
+  }
+
+  .modal__container_avatar .modal__input {
+    width: 100%;
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  .modal__container_avatar .modal__button_save_avatar {
+    width: 100%;
+    height: 46px;
+    font-size: 14px;
+    line-height: 17px;
+    margin-top: 30px;
+    margin-bottom: 0;
   }
 }
