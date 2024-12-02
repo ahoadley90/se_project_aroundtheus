@@ -167,7 +167,10 @@ deleteCardPopup.setEventListeners();
 // prettier-ignore
 function createCard(cardData) {
   const card = new Card({
-    data: cardData,
+    data: {
+      ...cardData,
+      ownerId: cardData.owner ? cardData.owner._id : cardData.ownerId,
+    },
     handleCardClick: (name, link) => {
       imagePopup.open(name, link);
     },
@@ -177,7 +180,7 @@ function createCard(cardData) {
     handleLikeClick: (card) => {
       const isLiked = card.isLiked();
       const likePromise = isLiked ? api.unlikeCard(card.getId()) : api.likeCard(card.getId());
-    
+
       likePromise
         .then((updatedCard) => {
           card.updateLikes(updatedCard);

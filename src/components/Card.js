@@ -7,14 +7,17 @@ export default class Card {
     this._link = data.link;
     this._id = data._id;
     this._likes = data.likes || [];
-    this._ownerId = data.owner._id;
+    this._ownerId = data.owner ? data.owner._id : data.ownerId;
     this._userId = userId;
     this._cardSelector = cardSelector;
     this._handleCardClick = handleCardClick;
     this._handleDeleteClick = handleDeleteClick;
     this._handleLikeClick = handleLikeClick;
 
-    this._isLiked = this._likes.some((user) => user._id === this._userId);
+    this._isLiked =
+      data.isLiked !== undefined
+        ? data.isLiked
+        : this._likes.some((user) => user._id === this._userId);
   }
 
   getId() {
@@ -26,15 +29,22 @@ export default class Card {
   }
 
   updateLikes(updatedCard) {
-    this._likes = updatedCard.likes;
-    this._isLiked = this._likes.some((user) => user._id === this._userId);
+    this._likes = updatedCard.likes || [];
+    this._isLiked =
+      updatedCard.isLiked !== undefined
+        ? updatedCard.isLiked
+        : this._likes.some((user) => user._id === this._userId);
     this._renderLikes();
+    this._updateLikeButton();
   }
 
   _renderLikes() {
     if (this._likeCounter) {
       this._likeCounter.textContent = this._likes.length;
     }
+  }
+
+  _updateLikeButton() {
     if (this._likeButton) {
       if (this._isLiked) {
         this._likeButton.classList.add("card__like-button_active");
@@ -72,6 +82,7 @@ export default class Card {
 
     this._setEventListeners();
     this._renderLikes();
+    this._updateLikeButton();
 
     this._cardImage.src = this._link;
     this._cardImage.alt = this._name;
