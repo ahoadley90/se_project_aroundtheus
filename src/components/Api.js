@@ -61,16 +61,11 @@ export default class Api {
       });
   }
 
-  unlikeCard(cardId) {
-    return fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
+  deleteCard(cardId) {
+    return fetch(`${this._baseUrl}/cards/${cardId}`, {
       method: "DELETE",
       headers: this._headers,
-    })
-      .then(this._checkResponse)
-      .then((data) => {
-        console.log("Unlike card response:", data);
-        return data;
-      });
+    }).then(this._checkResponse);
   }
 
   unlikeCard(cardId) {

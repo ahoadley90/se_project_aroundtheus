@@ -10,23 +10,24 @@ import { validationConfig } from "../utils/constants.js";
 import PopupWithConfirmation from "../components/PopupWithConfirmation.js";
 
 let cardList;
+let currentUserId;
 
 const formValidators = {};
 
-const deleteCardPopup = new PopupWithConfirmation(
-  "#delete-card-modal",
-  handleDeleteCard
-);
-function handleDeleteCard(card) {
-  return api
-    .deleteCard(card.getId())
-    .then(() => {
-      card.removeCard();
-      deleteCardPopup.close();
-    })
-    .catch((err) => console.error("Error deleting card:", err));
-}
+const deleteCardPopup = new PopupWithConfirmation("#delete-card-modal");
 
+// prettier-ignore
+function handleDeleteCard(card) {
+  deleteCardPopup.setAction(() => {
+    api.deleteCard(card.getId())
+      .then(() => {
+        card.removeCard();
+        deleteCardPopup.close();
+      })
+      .catch((err) => console.error("Error deleting card:", err));
+  });
+  deleteCardPopup.open();
+}
 const api = new Api({
   baseUrl: "https://around-api.en.tripleten-services.com/v1",
   headers: {
@@ -107,6 +108,7 @@ function handleAddCardFormSubmit(formData) {
 Promise.all([api.getUserInfo(), api.getInitialCards()])
   .then(([userData, initialCards]) => {
     userInfo.setUserInfo(userData);
+    currentUserId = userData._id;
     cardList = new Section(
       {
         items: initialCards,
@@ -170,23 +172,19 @@ function createCard(cardData) {
       imagePopup.open(name, link);
     },
     handleDeleteClick: (card) => {
-      deleteCardPopup.open(card);
+      handleDeleteCard(card);
     },
     handleLikeClick: (card) => {
-      if (card.isLiked()) {
-        api.unlikeCard(card.getId())
-          .then((res) => {
-            card.setLikes(res.likes);
-          })
-          .catch((err) => console.error("Error unliking card:", err));
-      } else {
-        api.likeCard(card.getId())
-          .then((res) => {
-            card.setLikes(res.likes);
-          })
-          .catch((err) => console.error("Error liking card:", err));
-      }
+      const isLiked = card.isLiked();
+      const likePromise = isLiked ? api.unlikeCard(card.getId()) : api.likeCard(card.getId());
+    
+      likePromise
+        .then((updatedCard) => {
+          card.updateLikes(updatedCard);
+        })
+        .catch((err) => console.error("Error updating like:", err));
     },
+    userId: currentUserId,
   }, cardTemplateSelector);
 
   return card.generateCard();
