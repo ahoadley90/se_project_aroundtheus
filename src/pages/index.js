@@ -9,6 +9,22 @@ import Api from "../components/Api.js";
 import { validationConfig } from "../utils/constants.js";
 import PopupWithConfirmation from "../components/PopupWithConfirmation.js";
 
+function handleSubmit(request, popupInstance, loadingText = "Saving...") {
+  if (popupInstance.renderLoading) {
+    popupInstance.renderLoading(true, loadingText);
+  }
+  request()
+    .then(() => {
+      popupInstance.close();
+    })
+    .catch(console.error)
+    .finally(() => {
+      if (popupInstance.renderLoading) {
+        popupInstance.renderLoading(false);
+      }
+    });
+}
+
 let cardList;
 let currentUserId;
 
@@ -19,12 +35,12 @@ const deleteCardPopup = new PopupWithConfirmation("#delete-card-modal");
 // prettier-ignore
 function handleDeleteCard(card) {
   deleteCardPopup.setAction(() => {
-    api.deleteCard(card.getId())
-      .then(() => {
+    function makeRequest() {
+      return api.deleteCard(card.getId()).then(() => {
         card.removeCard();
-        deleteCardPopup.close();
-      })
-      .catch((err) => console.error("Error deleting card:", err));
+      });
+    }
+    handleSubmit(makeRequest, deleteCardPopup, "Deleting...");
   });
   deleteCardPopup.open();
 }
@@ -59,51 +75,33 @@ const editAvatarPopup = new PopupWithForm(
 
 //prettier-ignore
 function handleProfileFormSubmit(formData) {
-  console.log("Profile form data:", formData);
-  console.log("Name:", formData.name);
-  console.log("About:", formData.about);
-  editProfilePopup.renderLoading(true);
-  api.setUserInfo(formData)
-    .then((updatedUser) => {
-      console.log("Updated user data:", updatedUser);
+  function makeRequest() {
+    return api.setUserInfo(formData).then((updatedUser) => {
       userInfo.setUserInfo(updatedUser);
-      editProfilePopup.close();
-    })
-    .catch((err) => {
-      console.error("Error updating profile:", err);
-    })
-    .finally(() => editProfilePopup.renderLoading(false));
+    });
+  }
+  handleSubmit(makeRequest, editProfilePopup);
 }
 //prettier-ignore
 function handleAvatarFormSubmit(formData) {
-  editAvatarPopup.renderLoading(true);
-  api.updateAvatar(formData.avatar)
-    .then((updatedUser) => {
+  function makeRequest() {
+    return api.updateAvatar(formData.avatar).then((updatedUser) => {
       userInfo.setUserInfo(updatedUser);
-      editAvatarPopup.close();
-    })
-    .catch((err) => {
-      console.error("Error updating avatar:", err);
-    })
-    .finally(() => {
-      editAvatarPopup.renderLoading(false);
     });
+  }
+  handleSubmit(makeRequest, editAvatarPopup);
 }
 
 // prettier-ignore
 function handleAddCardFormSubmit(formData) {
-  addCardPopup.renderLoading(true);
-  api.addCard({ name: formData.title, link: formData.url })
-    .then((newCard) => {
+  function makeRequest() {
+    return api.addCard({ name: formData.title, link: formData.url }).then((newCard) => {
       const cardElement = createCard(newCard);
       cardList.addItem(cardElement);
-      addCardPopup.close();
-      formValidators["add-card-form"].resetValidation(); // Add this line
-    })
-    .catch((err) => {
-      console.error("Error adding card:", err);
-    })
-    .finally(() => addCardPopup.renderLoading(false));
+      formValidators["add-card-form"].resetValidation();
+    });
+  }
+  handleSubmit(makeRequest, addCardPopup);
 }
 // Initialize all data
 Promise.all([api.getUserInfo(), api.getInitialCards()])
@@ -125,19 +123,25 @@ Promise.all([api.getUserInfo(), api.getInitialCards()])
   .catch((err) => console.error(err));
 
 // prettier-ignore
+// prettier-ignore
 document.querySelector(".profile__edit-button").addEventListener("click", () => {
   const { name, about } = userInfo.getUserInfo();
   editProfilePopup.setInputValues({ name, about });
+  if (formValidators["profile-form"]) {
+    formValidators["profile-form"].resetValidation();
+  }
   editProfilePopup.open();
 });
+
 document.querySelector(".profile__add-button").addEventListener("click", () => {
-  if (formValidators["add-card-form"]) {
-    formValidators["add-card-form"].resetValidation();
-  }
   addCardPopup.open();
 });
+
 //prettier-ignore
 document.querySelector(".profile__image").addEventListener("click", () => {
+  if (formValidators["avatar-form"]) {
+    formValidators["avatar-form"].resetValidation();
+  }
   editAvatarPopup.open();
 });
 
