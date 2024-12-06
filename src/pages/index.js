@@ -160,8 +160,6 @@ const enableValidation = (config) => {
   });
 };
 
-enableValidation(validationConfig);
-
 // Set up popups
 imagePopup.setEventListeners();
 editProfilePopup.setEventListeners();
