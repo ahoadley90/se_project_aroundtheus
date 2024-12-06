@@ -193,7 +193,7 @@
   margin-top: 48px;
 }
 
-.modal__button_save:hover {
+.modal__button_type_save:hover {
   background-color: #000;
   opacity: 80%;
 }
@@ -407,12 +407,15 @@
     margin-right: 0;
   }
 
-  .modal__container_avatar .modal__button_save_avatar {
-    width: 100%;
+  .modal__button_save_avatar {
+    width: 238px;
     height: 46px;
     font-size: 14px;
     line-height: 17px;
-    margin-top: 30px;
-    margin-bottom: 0;
+    margin-top: auto;
+    margin-bottom: 25px;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
   }
 }

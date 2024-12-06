@@ -98,6 +98,7 @@ function handleAddCardFormSubmit(formData) {
       const cardElement = createCard(newCard);
       cardList.addItem(cardElement);
       addCardPopup.close();
+      formValidators["add-card-form"].resetValidation(); // Add this line
     })
     .catch((err) => {
       console.error("Error adding card:", err);
