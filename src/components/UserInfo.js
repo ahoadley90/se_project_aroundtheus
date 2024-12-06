@@ -28,8 +28,3 @@ export default class UserInfo {
     return this._userId;
   }
 }
-const userInfo = new UserInfo({
-  nameSelector: ".profile__title",
-  jobSelector: ".profile__description",
-  avatarSelector: ".profile__image",
-});
