@@ -147,11 +147,14 @@ document.querySelector(".profile__image").addEventListener("click", () => {
   editAvatarPopup.open();
 });
 
-//prettier-ignore
-document.querySelector(".profile__image-container").addEventListener("click", () => {
+// prettier-ignore
+document.querySelector(".profile__image-container")
+  .addEventListener("click", () => {
+    if (formValidators["avatar-form"]) {
+      formValidators["avatar-form"].resetValidation();
+    }
     editAvatarPopup.open();
   });
-
 const enableValidation = (config) => {
   const formList = Array.from(document.querySelectorAll(config.formSelector));
   formList.forEach((formElement) => {
@@ -161,6 +164,9 @@ const enableValidation = (config) => {
     validator.enableValidation();
   });
 };
+
+// Call this function to enable validation for all forms
+enableValidation(validationConfig);
 
 // Set up popups
 imagePopup.setEventListeners();
