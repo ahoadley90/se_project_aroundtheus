@@ -98,7 +98,6 @@ function handleAddCardFormSubmit(formData) {
     return api.addCard({ name: formData.title, link: formData.url }).then((newCard) => {
       const cardElement = createCard(newCard);
       cardList.addItem(cardElement);
-      formValidators["add-card-form"].resetValidation();
     });
   }
   handleSubmit(makeRequest, addCardPopup);
@@ -134,6 +133,9 @@ document.querySelector(".profile__edit-button").addEventListener("click", () => 
 });
 
 document.querySelector(".profile__add-button").addEventListener("click", () => {
+  if (formValidators["card-form"]) {
+    formValidators["card-form"].resetValidation();
+  }
   addCardPopup.open();
 });
 
