@@ -10,18 +10,16 @@ import { validationConfig } from "../utils/constants.js";
 import PopupWithConfirmation from "../components/PopupWithConfirmation.js";
 
 function handleSubmit(request, popupInstance, loadingText = "Saving...") {
-  if (popupInstance.renderLoading) {
-    popupInstance.renderLoading(true, loadingText);
-  }
+  popupInstance.renderLoading(true, loadingText);
   request()
     .then(() => {
       popupInstance.close();
     })
-    .catch(console.error)
+    .catch((err) => {
+      console.error(err);
+    })
     .finally(() => {
-      if (popupInstance.renderLoading) {
-        popupInstance.renderLoading(false);
-      }
+      popupInstance.renderLoading(false);
     });
 }
 
@@ -60,20 +58,6 @@ const userInfo = new UserInfo({
 
 const cardTemplateSelector = "#card__template";
 const imagePopup = new PopupWithImage("#image_modal");
-const editProfilePopup = new PopupWithForm(
-  "#profile__edit_modal",
-  handleProfileFormSubmit
-);
-const addCardPopup = new PopupWithForm(
-  "#card__edit_modal",
-  handleAddCardFormSubmit
-);
-const editAvatarPopup = new PopupWithForm(
-  "#avatar-edit-modal",
-  handleAvatarFormSubmit
-);
-
-//prettier-ignore
 function handleProfileFormSubmit(formData) {
   function makeRequest() {
     return api.setUserInfo(formData).then((updatedUser) => {
@@ -82,7 +66,39 @@ function handleProfileFormSubmit(formData) {
   }
   handleSubmit(makeRequest, editProfilePopup);
 }
-//prettier-ignore
+const editProfilePopup = new PopupWithForm(
+  "#profile__edit_modal",
+  handleProfileFormSubmit
+);
+const addCardPopup = new PopupWithForm(
+  "#card__edit_modal",
+  handleAddCardFormSubmit
+);
+const avatarForm = document.querySelector("#avatar-edit-modal .modal__form");
+const avatarInput = avatarForm.querySelector("#avatar-input");
+const avatarSaveButton = avatarForm.querySelector(".modal__button_save_avatar");
+
+avatarInput.addEventListener("input", () => {
+  if (formValidators["avatar-edit-form"]) {
+    formValidators["avatar-edit-form"].checkButtonState();
+  }
+});
+
+// prettier-ignore
+document.querySelector(".profile__image-container")
+  .addEventListener("click", () => {
+    if (formValidators["avatar-edit-form"]) {
+      formValidators["avatar-edit-form"].resetValidation();
+    }
+    avatarInput.value = ""; // Clear the input
+    formValidators["avatar-edit-form"].checkButtonState(); // Update button state
+    editAvatarPopup.open();
+  });
+const editAvatarPopup = new PopupWithForm(
+  "#avatar-edit-modal",
+  handleAvatarFormSubmit
+);
+
 function handleAvatarFormSubmit(formData) {
   function makeRequest() {
     return api.updateAvatar(formData.avatar).then((updatedUser) => {
@@ -126,16 +142,14 @@ Promise.all([api.getUserInfo(), api.getInitialCards()])
 document.querySelector(".profile__edit-button").addEventListener("click", () => {
   const { name, about } = userInfo.getUserInfo();
   editProfilePopup.setInputValues({ name, about });
-  if (formValidators["profile-form"]) {
-    formValidators["profile-form"].resetValidation();
-  }
+  formValidators["profile-form"].resetValidation();
+  formValidators["profile-form"].checkButtonState();
   editProfilePopup.open();
 });
 
 document.querySelector(".profile__add-button").addEventListener("click", () => {
-  if (formValidators["card-form"]) {
-    formValidators["card-form"].resetValidation();
-  }
+  formValidators["card-form"].resetValidation();
+  formValidators["card-form"].checkButtonState();
   addCardPopup.open();
 });
 
@@ -148,13 +162,11 @@ document.querySelector(".profile__image").addEventListener("click", () => {
 });
 
 // prettier-ignore
-document.querySelector(".profile__image-container")
-  .addEventListener("click", () => {
-    if (formValidators["avatar-form"]) {
-      formValidators["avatar-form"].resetValidation();
-    }
-    editAvatarPopup.open();
-  });
+document.querySelector(".profile__image-container").addEventListener("click", () => {
+  formValidators["avatar-edit-form"].resetValidation();
+  formValidators["avatar-edit-form"].checkButtonState();
+  editAvatarPopup.open();
+});
 const enableValidation = (config) => {
   const formList = Array.from(document.querySelectorAll(config.formSelector));
   formList.forEach((formElement) => {

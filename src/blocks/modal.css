@@ -105,15 +105,23 @@
   opacity: 0.2;
 }
 
+.modal__button.modal__button_save_avatar:disabled,
 .modal__button.modal__button_save_avatar.modal__button_disabled {
   background-color: #e5e5e5;
   color: #000000;
   opacity: 0.2;
   cursor: default;
+  border: 1px solid #000000;
+  pointer-events: none;
 }
 
+.modal__button.modal__button_save_avatar:disabled:hover,
 .modal__button.modal__button_save_avatar.modal__button_disabled:hover {
   opacity: 0.2;
+}
+
+.modal__button.modal__button_save_avatar:hover {
+  opacity: 1;
 }
 
 @media screen and (max-width: 580px) {
