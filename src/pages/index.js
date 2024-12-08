@@ -11,15 +11,27 @@ import PopupWithConfirmation from "../components/PopupWithConfirmation.js";
 
 function handleSubmit(request, popupInstance, loadingText = "Saving...") {
   popupInstance.renderLoading(true, loadingText);
-  request()
-    .then(() => {
-      popupInstance.close();
+  return request()
+    .then((result) => {
+      console.log("Request successful");
+      return result;
     })
     .catch((err) => {
       console.error(err);
+      throw err;
     })
     .finally(() => {
       popupInstance.renderLoading(false);
+      if (typeof popupInstance.resetForm === "function") {
+        popupInstance.resetForm(); // Reset the form
+      }
+      popupInstance.close(); // Close the popup
+      if (typeof popupInstance._getInputValues === "function") {
+        console.log(
+          "Form values after closing:",
+          popupInstance._getInputValues()
+        );
+      }
     });
 }
 
@@ -66,47 +78,55 @@ function handleProfileFormSubmit(formData) {
   }
   handleSubmit(makeRequest, editProfilePopup);
 }
-const editProfilePopup = new PopupWithForm(
-  "#profile__edit_modal",
-  handleProfileFormSubmit
-);
-const addCardPopup = new PopupWithForm(
-  "#card__edit_modal",
-  handleAddCardFormSubmit
-);
-const avatarForm = document.querySelector("#avatar-edit-modal .modal__form");
-const avatarInput = avatarForm.querySelector("#avatar-input");
-const avatarSaveButton = avatarForm.querySelector(".modal__button_save_avatar");
-
-avatarInput.addEventListener("input", () => {
-  if (formValidators["avatar-edit-form"]) {
-    formValidators["avatar-edit-form"].checkButtonState();
-  }
-});
-
-// prettier-ignore
-document.querySelector(".profile__image-container")
-  .addEventListener("click", () => {
-    if (formValidators["avatar-edit-form"]) {
-      formValidators["avatar-edit-form"].resetValidation();
-    }
-    avatarInput.value = ""; // Clear the input
-    formValidators["avatar-edit-form"].checkButtonState(); // Update button state
-    editAvatarPopup.open();
-  });
-const editAvatarPopup = new PopupWithForm(
-  "#avatar-edit-modal",
-  handleAvatarFormSubmit
-);
-
-function handleAvatarFormSubmit(formData) {
+const addCardPopup = new PopupWithForm("#card__edit_modal", (formData) => {
   function makeRequest() {
-    return api.updateAvatar(formData.avatar).then((updatedUser) => {
-      userInfo.setUserInfo(updatedUser);
+    console.log("Sending card data:", {
+      name: formData.title,
+      link: formData.url,
+    });
+    return api.addCard({
+      name: formData.title,
+      link: formData.url,
     });
   }
-  handleSubmit(makeRequest, editAvatarPopup);
-}
+  handleSubmit(makeRequest, addCardPopup, "Creating...")
+    .then((cardData) => {
+      console.log("Received card data:", cardData);
+      const card = createCard(cardData);
+      cardList.addItem(card);
+    })
+    .catch((err) => {
+      console.error("Error adding card:", err);
+      console.error("Error details:", err.message);
+    });
+});
+
+const editProfilePopup = new PopupWithForm(
+  "#profile__edit_modal",
+  (formData) => {
+    function makeRequest() {
+      return api.setUserInfo(formData);
+    }
+    handleSubmit(makeRequest, editProfilePopup)
+      .then((updatedUser) => {
+        if (updatedUser) {
+          userInfo.setUserInfo(updatedUser);
+        }
+      })
+      .catch((err) => console.error("Error updating profile:", err));
+  }
+);
+
+const editAvatarPopup = new PopupWithForm("#avatar-edit-modal", (formData) => {
+  function makeRequest() {
+    return api.setUserAvatar(formData.avatar);
+  }
+  handleSubmit(makeRequest, editAvatarPopup, "Saving...")
+    .then((updatedUser) => {
+      userInfo.setUserInfo(updatedUser);
+    })
+    .catch((err) => console.error("Error updating avatar:", err));
+});
 
 // prettier-ignore
 function handleAddCardFormSubmit(formData) {
@@ -137,7 +157,6 @@ Promise.all([api.getUserInfo(), api.getInitialCards()])
   })
   .catch((err) => console.error(err));
 
-// prettier-ignore
 // prettier-ignore
 document.querySelector(".profile__edit-button").addEventListener("click", () => {
   const { name, about } = userInfo.getUserInfo();

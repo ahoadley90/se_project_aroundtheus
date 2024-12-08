@@ -7,7 +7,6 @@ export default class PopupWithForm extends Popup {
     this._form = this._popup.querySelector(".modal__form");
     this._inputs = this._form.querySelectorAll(".modal__input");
     this._submitButton = this._form.querySelector(".modal__button");
-    this._submitButton.dataset.originalText = this._submitButton.textContent;
   }
 
   _getInputValues() {
@@ -15,36 +14,46 @@ export default class PopupWithForm extends Popup {
     this._inputs.forEach((input) => {
       formValues[input.name] = input.value;
     });
-    console.log("Collected form values:", formValues);
     return formValues;
+  }
+
+  setInputValues(data) {
+    this._inputs.forEach((input) => {
+      if (data[input.name]) {
+        input.value = data[input.name];
+      }
+    });
   }
 
   setEventListeners() {
     super.setEventListeners();
     this._form.addEventListener("submit", (evt) => {
       evt.preventDefault();
-      this._handleFormSubmit(this._getInputValues());
+      const inputValues = this._getInputValues();
+      this._handleFormSubmit(inputValues);
     });
   }
 
   close() {
     super.close();
-    this._form.reset();
+    this.resetForm();
   }
 
-  setInputValues(data) {
+  resetForm() {
+    console.log("Resetting form...");
+    this._form.reset();
     this._inputs.forEach((input) => {
-      input.value = data[input.name];
+      input.value = "";
     });
+    console.log("Form reset. Current values:", this._getInputValues());
   }
 
   renderLoading(isLoading, loadingText = "Saving...") {
     if (isLoading) {
       this._submitButton.textContent = loadingText;
-      this._submitButton.disabled = true;
     } else {
-      this._submitButton.textContent = this._submitButton.dataset.originalText;
-      this._submitButton.disabled = false;
+      this._submitButton.textContent =
+        this._submitButton.dataset.text || "Save";
     }
   }
 }
