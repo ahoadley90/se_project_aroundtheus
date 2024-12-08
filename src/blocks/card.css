@@ -40,7 +40,7 @@
 
 .card__like-button:hover {
   opacity: 0.5;
-  radius: 2px;
+  border-radius: 2px;
 }
 
 .card__delete-button {
