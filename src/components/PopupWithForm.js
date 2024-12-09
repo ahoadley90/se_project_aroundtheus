@@ -18,13 +18,11 @@ export default class PopupWithForm extends Popup {
   }
 
   setInputValues(data) {
-    console.log("Setting input values:", data);
     this._inputs.forEach((input) => {
       if (data[input.name]) {
         input.value = data[input.name];
       }
     });
-    console.log("Input values after setting:", this._getInputValues());
   }
 
   setEventListeners() {
@@ -36,22 +34,15 @@ export default class PopupWithForm extends Popup {
     });
   }
 
-  close() {
-    console.log("Closing popup...");
-    console.log("Form values before closing:", this._getInputValues());
-    super.close();
-    console.log("Form values after closing:", this._getInputValues());
+  resetForm() {
+    this._form.reset();
+    if (this._formValidator) {
+      this._formValidator.resetValidation();
+    }
   }
 
-  resetForm() {
-    console.log("Resetting form...");
-    this._form.reset();
-    this._inputs.forEach((input) => {
-      console.log(`Resetting input ${input.name}. Old value: "${input.value}"`);
-      input.value = "";
-      console.log(`New value: "${input.value}"`);
-    });
-    console.log("Form reset. Current values:", this._getInputValues());
+  close() {
+    super.close();
   }
 
   renderLoading(isLoading, loadingText = "Saving...") {

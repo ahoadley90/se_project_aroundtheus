@@ -36,7 +36,7 @@
   min-height: 330px;
 }
 
-.modal__container_delete-card {
+.modal__container.modal__container_delete-card {
   position: relative;
   background-color: white;
   padding: 36px;
@@ -80,7 +80,7 @@
   opacity: 0.8;
 }
 
-.modal__container_delete-card .modal__close {
+.modal__container.modal__container_delete-card .modal__close {
   position: absolute;
   top: -40px;
   right: -40px;
@@ -456,7 +456,7 @@
     word-wrap: break-word;
   }
 
-  .modal__container_delete-card {
+  .modal__container.modal__container_delete-card {
     width: 282px;
     padding: 25px 22px;
     box-sizing: border-box;
@@ -468,7 +468,7 @@
     margin-bottom: 38px;
   }
 
-  .modal__container_delete-card .modal__close {
+  .modal__container.modal__container_delete-card .modal__close {
     right: -26px;
     width: 26px;
     height: 26px;
