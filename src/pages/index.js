@@ -22,16 +22,14 @@ function handleSubmit(request, popupInstance, loadingText = "Saving...") {
     })
     .finally(() => {
       popupInstance.renderLoading(false);
-      if (typeof popupInstance.resetForm === "function") {
-        popupInstance.resetForm(); // Reset the form
-      }
+      console.log("Before resetting form:");
+      console.log(popupInstance._getInputValues());
+      popupInstance.resetForm(); // Reset the form
+      console.log("After resetting form:");
+      console.log(popupInstance._getInputValues());
       popupInstance.close(); // Close the popup
-      if (typeof popupInstance._getInputValues === "function") {
-        console.log(
-          "Form values after closing:",
-          popupInstance._getInputValues()
-        );
-      }
+      console.log("After closing popup:");
+      console.log(popupInstance._getInputValues());
     });
 }
 
@@ -160,10 +158,11 @@ Promise.all([api.getUserInfo(), api.getInitialCards()])
 // prettier-ignore
 document.querySelector(".profile__edit-button").addEventListener("click", () => {
   const { name, about } = userInfo.getUserInfo();
-  editProfilePopup.setInputValues({ name, about });
+  console.log("Opening profile edit popup with values:", { name, about });
   formValidators["profile-form"].resetValidation();
+  editProfilePopup.setInputValues({ name, about }); 
   formValidators["profile-form"].checkButtonState();
-  editProfilePopup.open();
+  console.log("Profile edit popup opened with values:", editProfilePopup._getInputValues());
 });
 
 document.querySelector(".profile__add-button").addEventListener("click", () => {
@@ -196,7 +195,6 @@ const enableValidation = (config) => {
   });
 };
 
-// Call this function to enable validation for all forms
 enableValidation(validationConfig);
 
 // Set up popups
