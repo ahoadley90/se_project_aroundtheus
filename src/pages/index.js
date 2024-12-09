@@ -27,7 +27,7 @@ function handleSubmit(request, popupInstance, loadingText = "Saving...") {
       }
       popupInstance.close(); // Close the popup
       if (typeof popupInstance._getInputValues === "function") {
-        console.log(
+        console.log(99
           "Form values after closing:",
           popupInstance._getInputValues()
         );
