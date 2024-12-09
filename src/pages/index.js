@@ -13,16 +13,17 @@ function handleSubmit(request, popupInstance, loadingText = "Saving...") {
   popupInstance.renderLoading(true, loadingText);
   return request()
     .then((result) => {
-      console.log("Request successful");
+      popupInstance.close();
+      if (popupInstance.resetForm) {
+        popupInstance.resetForm();
+      }
       return result;
     })
     .catch((err) => {
       console.error(err);
-      throw err;
     })
     .finally(() => {
       popupInstance.renderLoading(false);
-      popupInstance.close();
     });
 }
 let cardList;
@@ -68,74 +69,51 @@ function handleProfileFormSubmit(formData) {
   function makeRequest() {
     return api.setUserInfo(formData).then((updatedUser) => {
       userInfo.setUserInfo(updatedUser);
-    });
-  }
-  handleSubmit(makeRequest, profileEditPopup)
-    .then(() => {
       profileEditPopup.resetForm(); // Reset form after successful submission
-    })
-    .catch((err) => console.error("Error updating profile:", err));
-}
-const addCardPopup = new PopupWithForm("#card__edit_modal", (formData) => {
-  function makeRequest() {
-    console.log("Sending card data:", {
-      name: formData.title,
-      link: formData.url,
-    });
-    return api.addCard({
-      name: formData.title,
-      link: formData.url,
     });
   }
-  handleSubmit(makeRequest, addCardPopup, "Creating...")
-    .then((cardData) => {
-      console.log("Received card data:", cardData);
-      const card = createCard(cardData);
-      cardList.addItem(card);
-    })
-    .catch((err) => {
-      console.error("Error adding card:", err);
-      console.error("Error details:", err.message);
-    });
-});
+  handleSubmit(makeRequest, profileEditPopup);
+}
 
+// prettier-ignore
 const editProfilePopup = new PopupWithForm(
   "#profile__edit_modal",
   (formData) => {
     function makeRequest() {
-      return api.setUserInfo(formData);
+      return api.setUserInfo(formData).then((updatedUser) => {
+        userInfo.setUserInfo(updatedUser);
+      });
     }
-    handleSubmit(makeRequest, editProfilePopup)
-      .then((updatedUser) => {
-        if (updatedUser) {
-          userInfo.setUserInfo(updatedUser);
-        }
-      })
-      .catch((err) => console.error("Error updating profile:", err));
+    handleSubmit(makeRequest, editProfilePopup);
   }
 );
-
+//prettier-ignore
+const addCardPopup = new PopupWithForm("#card__edit_modal", (formData) => {
+  function makeRequest() {
+    return api.addCard({
+        name: formData.title,
+        link: formData.url,
+      })
+      .then((cardData) => {
+        const card = createCard(cardData);
+        cardList.addItem(card);
+        return cardData;
+      });
+  }
+  handleSubmit(makeRequest, addCardPopup, "Creating...");
+});
 const editAvatarPopup = new PopupWithForm("#avatar-edit-modal", (formData) => {
   function makeRequest() {
-    return api.updateAvatar(formData.avatar);
-  }
-  handleSubmit(makeRequest, editAvatarPopup, "Saving...")
-    .then((updatedUser) => {
+    return api.updateAvatar(formData.avatar).then((updatedUser) => {
       userInfo.setUserInfo(updatedUser);
-    })
-    .catch((err) => console.error("Error updating avatar:", err));
+      return updatedUser;
+    });
+  }
+  handleSubmit(makeRequest, editAvatarPopup, "Saving...");
 });
 
 // prettier-ignore
-function handleAddCardFormSubmit(formData) {
-  function makeRequest() {
-    return api.addCard({ name: formData.title, link: formData.url }).then((newCard) => {
-      const cardElement = createCard(newCard);
-      cardList.addItem(cardElement);
-    });
-  }
-  handleSubmit(makeRequest, addCardPopup);
-}
+
 // Initialize all data
 Promise.all([api.getUserInfo(), api.getInitialCards()])
   .then(([userData, initialCards]) => {
@@ -164,25 +142,8 @@ profileEditButton.addEventListener("click", () => {
   profileEditPopup.open();
 });
 
-// Handle form submission
-profileEditPopup._handleFormSubmit = (formData) => {
-  profileEditPopup.renderLoading(true);
-  api
-    .setUserInfo(formData)
-    .then((res) => {
-      userInfo.setUserInfo(res);
-      profileEditPopup.close();
-      profileEditPopup.resetForm(); // Reset form after successful submission
-    })
-    .catch((err) => console.log(err))
-    .finally(() => {
-      profileEditPopup.renderLoading(false);
-    });
-};
-
 //prettier-ignore
 const addCardButton = document.querySelector(".profile__add-button");
-addCardPopup.setEventListeners();
 addCardButton.addEventListener("click", () => {
   formValidators["card-form"].resetValidation();
   addCardPopup.open();
