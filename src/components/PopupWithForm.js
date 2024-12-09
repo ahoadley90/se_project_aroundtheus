@@ -10,33 +10,43 @@ export default class PopupWithForm extends Popup {
   }
 
   _getInputValues() {
-    const inputValues = {};
+    const formValues = {};
     this._inputs.forEach((input) => {
-      inputValues[input.name] = input.value;
+      formValues[input.name] = input.value;
     });
-    return inputValues;
+    return formValues;
+  }
+
+  setInputValues(data) {
+    this._inputs.forEach((input) => {
+      if (data[input.name]) {
+        input.value = data[input.name];
+      }
+    });
   }
 
   setEventListeners() {
     super.setEventListeners();
     this._form.addEventListener("submit", (evt) => {
       evt.preventDefault();
-      this._handleFormSubmit(this._getInputValues());
-      this._form.reset();
+      const inputValues = this._getInputValues();
+      this._handleFormSubmit(inputValues);
     });
-  }
-
-  getForm() {
-    return this._form;
   }
 
   resetForm() {
     this._form.reset();
+    if (this._formValidator) {
+      this._formValidator.resetValidation();
+    }
   }
 
-  setInputValues(data) {
-    this._inputs.forEach((input) => {
-      input.value = data[input.name];
-    });
+  renderLoading(isLoading, loadingText = "Saving...") {
+    if (isLoading) {
+      this._submitButton.textContent = loadingText;
+    } else {
+      this._submitButton.textContent =
+        this._submitButton.dataset.text || "Save";
+    }
   }
 }
