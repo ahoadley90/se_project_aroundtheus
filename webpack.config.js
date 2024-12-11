@@ -11,7 +11,7 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, "dist"),
     filename: "main.js",
-    publicPath: "",
+    publicPath: "/se-project_aroundtheus",
   },
   target: ["web", "es5"],
   stats: "errors-only",
