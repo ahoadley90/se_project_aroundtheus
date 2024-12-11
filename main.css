@@ -4,7 +4,7 @@
   font-style: normal;
   font-weight: 400;
   font-display: swap;
-  src: url(/se-project_aroundtheus76224c7fa303861462e7.woff2) format("woff2");
+  src: url(/se-project_aroundtheus/76224c7fa303861462e7.woff2) format("woff2");
 }
 
 @font-face {
@@ -12,7 +12,7 @@
   font-style: normal;
   font-weight: 500;
   font-display: swap;
-  src: url(/se-project_aroundtheus9c1163dc5cc2a1c9b55b.woff2) format("woff2");
+  src: url(/se-project_aroundtheus/9c1163dc5cc2a1c9b55b.woff2) format("woff2");
 }
 
 @font-face {
@@ -20,7 +20,7 @@
   font-style: normal;
   font-weight: 900;
   font-display: swap;
-  src: url(/se-project_aroundtheus9ed71fbc8206e8069042.woff2) format("woff2");
+  src: url(/se-project_aroundtheus/9ed71fbc8206e8069042.woff2) format("woff2");
 }
 
 .page {
@@ -89,7 +89,7 @@
 }
 
 .profile__edit-button {
-  background: transparent url(/se-project_aroundtheusa1892ea72cb87c8fc3aa.svg) center no-repeat;
+  background: transparent url(/se-project_aroundtheus/a1892ea72cb87c8fc3aa.svg) center no-repeat;
   height: 24px;
   width: 24px;
   grid-area: button;
@@ -106,7 +106,7 @@
 }
 
 .profile__add-button {
-  background: url(/se-project_aroundtheusd86bb2edc2f6eadb96b7.svg) center no-repeat;
+  background: url(/se-project_aroundtheus/d86bb2edc2f6eadb96b7.svg) center no-repeat;
   width: 150px;
   height: 50px;
   margin-left: auto;
@@ -307,7 +307,7 @@
 }
 
 .card__like-button {
-  background: transparent url(/se-project_aroundtheus490e8e45f6fd07daa7ff.svg) center;
+  background: transparent url(/se-project_aroundtheus/490e8e45f6fd07daa7ff.svg) center;
   height: 18px;
   width: 21px;
   border: none;
@@ -315,7 +315,7 @@
 }
 
 .card__like-button_active {
-  background-image: url(/se-project_aroundtheus226461bd64622361ffb2.svg);
+  background-image: url(/se-project_aroundtheus/226461bd64622361ffb2.svg);
 }
 
 .card__like-button:hover {
@@ -324,7 +324,7 @@
 }
 
 .card__delete-button {
-  background: url(/se-project_aroundtheusc4956c32989e66228de8.svg);
+  background: url(/se-project_aroundtheus/c4956c32989e66228de8.svg);
   border: none;
   cursor: pointer;
   padding: 5px;
@@ -475,7 +475,7 @@
   right: -40px;
   width: 40px;
   height: 40px;
-  background-image: url(/se-project_aroundtheus81d0f6a6ee1da3d7d7d2.svg);
+  background-image: url(/se-project_aroundtheus/81d0f6a6ee1da3d7d7d2.svg);
   background-size: contain;
   background-repeat: no-repeat;
   background-color: transparent;
@@ -532,7 +532,7 @@
   right: -40px;
   width: 40px;
   height: 40px;
-  background-image: url(/se-project_aroundtheus81d0f6a6ee1da3d7d7d2.svg);
+  background-image: url(/se-project_aroundtheus/81d0f6a6ee1da3d7d7d2.svg);
   background-size: contain;
   background-repeat: no-repeat;
   background-color: transparent;
@@ -606,7 +606,7 @@
 }
 
 .modal__close {
-  background-image: url(/se-project_aroundtheus81d0f6a6ee1da3d7d7d2.svg);
+  background-image: url(/se-project_aroundtheus/81d0f6a6ee1da3d7d7d2.svg);
   position: absolute;
   bottom: calc(100% + 5px);
   left: calc(100% + 5px);
